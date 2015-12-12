@@ -1,0 +1,99 @@
+﻿<Window x:Class="PoCeHealthLive.View.EpdDocumentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PoCeHealthLive.View"
+        mc:Ignorable="d"
+        Title="EpdDocumentWindow" Height="400" Width="400">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+        <Label x:Name= "lblClassCodes" Content="Class Code:" />
+        <ComboBox 
+            x:Name="comBoxClassCodes" 
+            Grid.Column="1" 
+            Grid.ColumnSpan="2" 
+            Margin="3"
+            ItemsSource="{Binding ClassCodes, Mode=OneWay}"
+            DisplayMemberPath="Name"
+            SelectedValue="{Binding SelectedClassCode}"
+            SelectedValuePath="Code"
+            />       
+        <Label x:Name="lblDateTimeRange" Content="Date range:" Grid.Row="1" />
+        <Label x:Name="lblFromDate" Content="From:" Grid.Row="1" Grid.Column="1" />
+        <DatePicker x:Name="datePickerFromDate" Grid.Row="1" Grid.Column="2" Margin="3" IsEnabled="False" />
+        <Label x:Name="lblToDate" Content="To:" Grid.Row="2" Grid.Column="1" />
+        <DatePicker x:Name="datePickerToDate" Grid.Row="2" Grid.Column="2" Margin="3" IsEnabled="False"/>
+        <Label x:Name= "lblHealthCareFacilityCodes" Content="Healthcarefacility Code:" Grid.Row="3" />
+        <ComboBox 
+            x:Name="comBoxHealthCareFacilityCodes" 
+            Grid.Row="3" 
+            Grid.Column="1" 
+            Grid.ColumnSpan="2" 
+            Margin="3" 
+            ItemsSource="{Binding HealthCareFacilityCodes, Mode=OneWay}"
+            DisplayMemberPath="Name"
+            SelectedValue="{Binding SelectedHealthCareFacilityCode}"
+            SelectedValuePath="Code"
+            />      
+        <Label x:Name= "lblConfidentialityCodes" Content="Confidentiality Code:" Grid.Row="4" />
+        <ComboBox 
+            x:Name="comBoxConfidentialityCodes" 
+            Grid.Row="4" 
+            Grid.Column="1" 
+            Grid.ColumnSpan="2" 
+            Margin="3" 
+            ItemsSource="{Binding ConfidentialityCodes, Mode=OneWay}"
+            DisplayMemberPath="Name"
+            SelectedValue="{Binding SelectedConfidentialityCode}"
+            SelectedValuePath="Code"
+            />
+        <Label x:Name= "lblPracticeSettingCodes" Content="PracticeSetting Code:" Grid.Row="5" />
+        <ComboBox 
+            x:Name="txtBoxPracticeSettingCodes" 
+            Grid.Row="5" 
+            Grid.Column="1" 
+            Grid.ColumnSpan="2" 
+            Margin="3" 
+            ItemsSource="{Binding PracticeSettingCodes, Mode=OneWay}"
+            DisplayMemberPath="Name"
+            SelectedValue="{Binding SelectedPracticeSettingCode}"
+            SelectedValuePath="Code"
+            />
+        <Label x:Name= "lblFormatCodes" Content="Format Code:" Grid.Row="6" />
+        <ComboBox 
+            x:Name="txtBoxFormatCodes" 
+            Grid.Row="6" 
+            Grid.Column="1" 
+            Grid.ColumnSpan="2" 
+            Margin="3" 
+            ItemsSource="{Binding FormatCodes, Mode=OneWay}"
+            DisplayMemberPath="Name"
+            SelectedValue="{Binding SelectedFormatCode}"
+            SelectedValuePath="Code"
+            />
+
+        <Button x:Name="buttonSearch" Content="Search" Command="{Binding SearchDocumentsCommand}" Grid.Row="7" Grid.Column="3" HorizontalAlignment="Right" MinWidth="80" Margin="0,10,3,0" />
+        <ListView Margin="10" x:Name="ListViewResults" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3">
+            <ListViewItem>Item 1</ListViewItem>
+            <ListViewItem>Item 2</ListViewItem>
+            <ListViewItem>Item 3</ListViewItem>
+            <ListViewItem>Item 4</ListViewItem>
+        </ListView>
+    </Grid>
+</Window>

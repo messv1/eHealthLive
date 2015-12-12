@@ -1,0 +1,103 @@
+﻿<Window x:Class="PoCeHealthLive.View.PublishDocumentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PoCeHealthLive.View"
+        mc:Ignorable="d"
+        Title="Publish Document to Infomed" Height="340" Width="400">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label x:Name="lblFilePath" Content="Select file:" />
+        <TextBox x:Name="txtBoxFilePath" Text="{Binding FilePath}" Grid.Column="1" Margin="3" />
+        <Button x:Name="buttonBrowse" Command="{Binding BrowseDocumentsCommand}" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Right" MinWidth="80" Margin="3" Content="Browse"/>
+        <Label x:Name="lblTitle" Grid.Row="2" Content="Title:"/>
+        <TextBox x:Name="txtBoxTitle" Text="{Binding DocumentTitle}" Grid.Row="2" Grid.Column="2" Margin="3" />
+        <Label x:Name="lblClassCodes" Grid.Row="3" Content="Class Code:" />
+        <ComboBox 
+            x:Name="comboBoxType" 
+            Grid.Column="1" 
+            Grid.Row="3" 
+            Margin="3"
+            ItemsSource="{Binding ClassCodes, Mode=OneWay}"
+            DisplayMemberPath="Name"
+            SelectedValue="{Binding SelectedClassCode}"
+            SelectedValuePath="Code"
+            />
+        <Label x:Name="lblTypeCode" Grid.Row="4" Content="Type Code:" />
+        <ComboBox 
+            x:Name="comboBoxCategory" 
+            Grid.Column="1" 
+            Grid.Row="4"  
+            Margin="3" 
+            ItemsSource="{Binding TypeCodes, Mode=OneWay}"
+            DisplayMemberPath="Name"
+            SelectedValue="{Binding SelectedTypeCode}"
+            SelectedValuePath="Code"
+            />
+        <Label x:Name="lblHealthCareFacilityCodes" Grid.Row="5" Content="HealthCareFacility Code:" />
+        <ComboBox 
+            x:Name="comBoxHealthCareFacilityCodes" 
+            Grid.Row="5" 
+            Grid.Column="1"  
+            Margin="3" 
+            ItemsSource="{Binding HealthCareFacilityCodes, Mode=OneWay}"
+            DisplayMemberPath="Name"
+            SelectedValue="{Binding SelectedHealthCareFacilityCode}"
+            SelectedValuePath="Code"
+            />
+            <Label x:Name="lblConfidentialityCode" Grid.Row="6" Content="Confidentiality Code:" />
+        <ComboBox 
+            x:Name="comboBoxConfidentialityCode" 
+            Grid.Column="1" 
+            Grid.Row="6" 
+            Margin="3" 
+            ItemsSource="{Binding ConfidentialityCodes, Mode=OneWay}"
+            DisplayMemberPath="Name"
+            SelectedValue="{Binding SelectedConfidentialityCode}"
+            SelectedValuePath="Code"
+            />
+
+        <Label x:Name= "lblPracticeSettingCodes" Content="PracticeSetting Code:" Grid.Row="7" />
+        <ComboBox 
+            x:Name="txtBoxPracticeSettingCodes" 
+            Grid.Row="7" 
+            Grid.Column="1" 
+            Grid.ColumnSpan="2" 
+            Margin="3" 
+            ItemsSource="{Binding PracticeSettingCodes, Mode=OneWay}"
+            DisplayMemberPath="Name"
+            SelectedValue="{Binding SelectedPracticeSettingCode}"
+            SelectedValuePath="Code"
+            />
+        <Label x:Name= "lblFormatCodes" Content="Format Code:" Grid.Row="8" />
+        <ComboBox 
+            x:Name="txtBoxFormatCodes" 
+            Grid.Row="8" 
+            Grid.Column="1" 
+            Grid.ColumnSpan="2" 
+            Margin="3" 
+            ItemsSource="{Binding FormatCodes, Mode=OneWay}"
+            DisplayMemberPath="Name"
+            SelectedValue="{Binding SelectedFormatCode}"
+            SelectedValuePath="Code"
+            />
+
+        <Button x:Name="buttonPublish" Content="Publish" Command="{Binding PublishCommand }" Grid.Row="9" Grid.Column="1"  HorizontalAlignment="Right" MinWidth="80" Margin="0,10,3,0" />
+    </Grid>
+</Window>

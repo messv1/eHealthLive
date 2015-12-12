@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PraxiCenterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TadrPersonen">
+          <Key>
+            <PropertyRef Name="inStammID" />
+          </Key>
+          <Property Name="inStammID" Type="int" Nullable="false" />
+          <Property Name="shSexID" Type="smallint" />
+          <Property Name="dtGeburtstag" Type="datetime" />
+          <Property Name="txTitel" Type="nvarchar" MaxLength="255" />
+          <Property Name="txVornamenkürzel" Type="nvarchar" MaxLength="10" />
+          <Property Name="txGeburtsname" Type="nvarchar" MaxLength="255" />
+          <Property Name="txNickName" Type="nvarchar" MaxLength="255" />
+          <Property Name="txBeruf" Type="nvarchar" MaxLength="255" />
+          <Property Name="txAHVNr" Type="nvarchar" MaxLength="20" />
+          <Property Name="inNationalitätLandID" Type="int" />
+          <Property Name="shMuttersprache" Type="smallint" />
+          <Property Name="shZivilstandID" Type="smallint" />
+          <Property Name="shKonfessionID" Type="smallint" />
+          <Property Name="dtExitus" Type="datetime" />
+          <Property Name="inHeimatOrt" Type="int" />
+          <Property Name="inHeimatLand" Type="int" />
+          <Property Name="inGeburtsOrt" Type="int" />
+          <Property Name="inGeburtsLand" Type="int" />
+          <Property Name="txGeburtsnamePhonem" Type="nvarchar" MaxLength="255" />
+          <Property Name="inLastUpdateUser" Type="int" Nullable="false" />
+          <Property Name="dtLastUpdate" Type="datetime" Nullable="false" />
+          <Property Name="inCreationUser" Type="int" Nullable="false" />
+          <Property Name="dtCreation" Type="datetime" Nullable="false" />
+          <Property Name="timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="TadrStamm">
+          <Key>
+            <PropertyRef Name="IDStamm" />
+          </Key>
+          <Property Name="IDStamm" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="shStammArt" Type="smallint" Nullable="false" />
+          <Property Name="shKorrespondenzsprache" Type="smallint" Nullable="false" />
+          <Property Name="tfInaktiv" Type="bit" Nullable="false" />
+          <Property Name="inMandantID" Type="int" Nullable="false" />
+          <Property Name="txEANNummer" Type="nvarchar" MaxLength="50" />
+          <Property Name="txErfassungscode" Type="nvarchar" MaxLength="50" />
+          <Property Name="txAnrede" Type="nvarchar" MaxLength="50" />
+          <Property Name="txName1" Type="nvarchar" MaxLength="255" />
+          <Property Name="txName2" Type="nvarchar" MaxLength="255" />
+          <Property Name="moBemerkungen" Type="ntext" />
+          <Property Name="inBildID" Type="int" />
+          <Property Name="txName1Phonem" Type="nvarchar" MaxLength="255" />
+          <Property Name="txName2Phonem" Type="nvarchar" MaxLength="255" />
+          <Property Name="inLastUpdateUser" Type="int" Nullable="false" />
+          <Property Name="dtLastUpdate" Type="datetime" Nullable="false" />
+          <Property Name="inCreationUser" Type="int" Nullable="false" />
+          <Property Name="dtCreation" Type="datetime" Nullable="false" />
+          <Property Name="timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="TpatNummer">
+          <Key>
+            <PropertyRef Name="IDPatientenNummer" />
+          </Key>
+          <Property Name="IDPatientenNummer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inPatientID" Type="int" Nullable="false" />
+          <Property Name="inZugriffsmandantID" Type="int" Nullable="false" />
+          <Property Name="inNummer" Type="int" Nullable="false" />
+          <Property Name="inLastUpdateUser" Type="int" Nullable="false" />
+          <Property Name="dtLastUpdate" Type="datetime" Nullable="false" />
+          <Property Name="inCreationUser" Type="int" Nullable="false" />
+          <Property Name="dtCreation" Type="datetime" Nullable="false" />
+          <Property Name="timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityContainer Name="PraxiCenterModelStoreContainer">
+          <EntitySet Name="TadrPersonen" EntityType="Self.TadrPersonen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TadrStamm" EntityType="Self.TadrStamm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TpatNummer" EntityType="Self.TpatNummer" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PraxiCenterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TadrPersonen">
+          <Key>
+            <PropertyRef Name="inStammID" />
+          </Key>
+          <Property Name="inStammID" Type="Int32" Nullable="false" />
+          <Property Name="shSexID" Type="Int16" />
+          <Property Name="dtGeburtstag" Type="DateTime" Precision="3" />
+          <Property Name="txTitel" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="txVornamenkürzel" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="txGeburtsname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="txNickName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="txBeruf" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="txAHVNr" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="inNationalitätLandID" Type="Int32" />
+          <Property Name="shMuttersprache" Type="Int16" />
+          <Property Name="shZivilstandID" Type="Int16" />
+          <Property Name="shKonfessionID" Type="Int16" />
+          <Property Name="dtExitus" Type="DateTime" Precision="3" />
+          <Property Name="inHeimatOrt" Type="Int32" />
+          <Property Name="inHeimatLand" Type="Int32" />
+          <Property Name="inGeburtsOrt" Type="Int32" />
+          <Property Name="inGeburtsLand" Type="Int32" />
+          <Property Name="txGeburtsnamePhonem" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="inLastUpdateUser" Type="Int32" Nullable="false" />
+          <Property Name="dtLastUpdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="inCreationUser" Type="Int32" Nullable="false" />
+          <Property Name="dtCreation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="TadrStamm">
+          <Key>
+            <PropertyRef Name="IDStamm" />
+          </Key>
+          <Property Name="IDStamm" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="shStammArt" Type="Int16" Nullable="false" />
+          <Property Name="shKorrespondenzsprache" Type="Int16" Nullable="false" />
+          <Property Name="tfInaktiv" Type="Boolean" Nullable="false" />
+          <Property Name="inMandantID" Type="Int32" Nullable="false" />
+          <Property Name="txEANNummer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="txErfassungscode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="txAnrede" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="txName1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="txName2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="moBemerkungen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="inBildID" Type="Int32" />
+          <Property Name="txName1Phonem" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="txName2Phonem" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="inLastUpdateUser" Type="Int32" Nullable="false" />
+          <Property Name="dtLastUpdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="inCreationUser" Type="Int32" Nullable="false" />
+          <Property Name="dtCreation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="TpatNummer">
+          <Key>
+            <PropertyRef Name="IDPatientenNummer" />
+          </Key>
+          <Property Name="IDPatientenNummer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inPatientID" Type="Int32" Nullable="false" />
+          <Property Name="inZugriffsmandantID" Type="Int32" Nullable="false" />
+          <Property Name="inNummer" Type="Int32" Nullable="false" />
+          <Property Name="inLastUpdateUser" Type="Int32" Nullable="false" />
+          <Property Name="dtLastUpdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="inCreationUser" Type="Int32" Nullable="false" />
+          <Property Name="dtCreation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityContainer Name="PraxiCenterEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TadrPersonen" EntityType="Self.TadrPersonen" />
+          <EntitySet Name="TadrStamm" EntityType="Self.TadrStamm" />
+          <EntitySet Name="TpatNummer" EntityType="Self.TpatNummer" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PraxiCenterModelStoreContainer" CdmEntityContainer="PraxiCenterEntities">
+          <EntitySetMapping Name="TadrPersonen">
+            <EntityTypeMapping TypeName="PraxiCenterModel.TadrPersonen">
+              <MappingFragment StoreEntitySet="TadrPersonen">
+                <ScalarProperty Name="inStammID" ColumnName="inStammID" />
+                <ScalarProperty Name="shSexID" ColumnName="shSexID" />
+                <ScalarProperty Name="dtGeburtstag" ColumnName="dtGeburtstag" />
+                <ScalarProperty Name="txTitel" ColumnName="txTitel" />
+                <ScalarProperty Name="txVornamenkürzel" ColumnName="txVornamenkürzel" />
+                <ScalarProperty Name="txGeburtsname" ColumnName="txGeburtsname" />
+                <ScalarProperty Name="txNickName" ColumnName="txNickName" />
+                <ScalarProperty Name="txBeruf" ColumnName="txBeruf" />
+                <ScalarProperty Name="txAHVNr" ColumnName="txAHVNr" />
+                <ScalarProperty Name="inNationalitätLandID" ColumnName="inNationalitätLandID" />
+                <ScalarProperty Name="shMuttersprache" ColumnName="shMuttersprache" />
+                <ScalarProperty Name="shZivilstandID" ColumnName="shZivilstandID" />
+                <ScalarProperty Name="shKonfessionID" ColumnName="shKonfessionID" />
+                <ScalarProperty Name="dtExitus" ColumnName="dtExitus" />
+                <ScalarProperty Name="inHeimatOrt" ColumnName="inHeimatOrt" />
+                <ScalarProperty Name="inHeimatLand" ColumnName="inHeimatLand" />
+                <ScalarProperty Name="inGeburtsOrt" ColumnName="inGeburtsOrt" />
+                <ScalarProperty Name="inGeburtsLand" ColumnName="inGeburtsLand" />
+                <ScalarProperty Name="txGeburtsnamePhonem" ColumnName="txGeburtsnamePhonem" />
+                <ScalarProperty Name="inLastUpdateUser" ColumnName="inLastUpdateUser" />
+                <ScalarProperty Name="dtLastUpdate" ColumnName="dtLastUpdate" />
+                <ScalarProperty Name="inCreationUser" ColumnName="inCreationUser" />
+                <ScalarProperty Name="dtCreation" ColumnName="dtCreation" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TadrStamm">
+            <EntityTypeMapping TypeName="PraxiCenterModel.TadrStamm">
+              <MappingFragment StoreEntitySet="TadrStamm">
+                <ScalarProperty Name="IDStamm" ColumnName="IDStamm" />
+                <ScalarProperty Name="shStammArt" ColumnName="shStammArt" />
+                <ScalarProperty Name="shKorrespondenzsprache" ColumnName="shKorrespondenzsprache" />
+                <ScalarProperty Name="tfInaktiv" ColumnName="tfInaktiv" />
+                <ScalarProperty Name="inMandantID" ColumnName="inMandantID" />
+                <ScalarProperty Name="txEANNummer" ColumnName="txEANNummer" />
+                <ScalarProperty Name="txErfassungscode" ColumnName="txErfassungscode" />
+                <ScalarProperty Name="txAnrede" ColumnName="txAnrede" />
+                <ScalarProperty Name="txName1" ColumnName="txName1" />
+                <ScalarProperty Name="txName2" ColumnName="txName2" />
+                <ScalarProperty Name="moBemerkungen" ColumnName="moBemerkungen" />
+                <ScalarProperty Name="inBildID" ColumnName="inBildID" />
+                <ScalarProperty Name="txName1Phonem" ColumnName="txName1Phonem" />
+                <ScalarProperty Name="txName2Phonem" ColumnName="txName2Phonem" />
+                <ScalarProperty Name="inLastUpdateUser" ColumnName="inLastUpdateUser" />
+                <ScalarProperty Name="dtLastUpdate" ColumnName="dtLastUpdate" />
+                <ScalarProperty Name="inCreationUser" ColumnName="inCreationUser" />
+                <ScalarProperty Name="dtCreation" ColumnName="dtCreation" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TpatNummer">
+            <EntityTypeMapping TypeName="PraxiCenterModel.TpatNummer">
+              <MappingFragment StoreEntitySet="TpatNummer">
+                <ScalarProperty Name="IDPatientenNummer" ColumnName="IDPatientenNummer" />
+                <ScalarProperty Name="inPatientID" ColumnName="inPatientID" />
+                <ScalarProperty Name="inZugriffsmandantID" ColumnName="inZugriffsmandantID" />
+                <ScalarProperty Name="inNummer" ColumnName="inNummer" />
+                <ScalarProperty Name="inLastUpdateUser" ColumnName="inLastUpdateUser" />
+                <ScalarProperty Name="dtLastUpdate" ColumnName="dtLastUpdate" />
+                <ScalarProperty Name="inCreationUser" ColumnName="inCreationUser" />
+                <ScalarProperty Name="dtCreation" ColumnName="dtCreation" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
