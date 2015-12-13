@@ -593,7 +593,6 @@ namespace PoCeHealthLive.ViewModel
             this.PracticeSettingCodes.Add(new DocumentAttributes("Zahn-, Mund- und Kieferheilkunde", "260067"));
             this.PracticeSettingCodes.Add(new DocumentAttributes("Hämatologie", "260068"));
             this.PracticeSettingCodes.Add(new DocumentAttributes("Andere medzini-sche Fachrichtung", "260099"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Andere medzini-sche Fachrichtung", "260099"));
 
             // Set Document Format Codes    
             this.FormatCodes.Add(new DocumentAttributes("application/pdf", "urn:ihe:iti:xds-sd:pdf:2008"));
