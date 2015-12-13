@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PoCeHealthLive.Model
 {
-    class FormatCode
+    class DocumentAttributes
     {
         public string Name { get; set; }
         public string Code { get; set; }
-        public FormatCode(string name, string code)
+        public DocumentAttributes(string name, string code)
         {
             this.Name = name;
             this.Code = code;

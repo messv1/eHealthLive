@@ -138,12 +138,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\ClassCode.cs" />
-    <Compile Include="Model\ConfidentialityCode.cs" />
-    <Compile Include="Model\FormatCode.cs" />
-    <Compile Include="Model\HealthCareFacilityCode.cs" />
-    <Compile Include="Model\PracticeSettingCode.cs" />
-    <Compile Include="Model\TypeCode.cs" />
+    <Compile Include="Model\DocumentAttributes.cs" />
     <Compile Include="ViewModel\Commands\BrowseDocumentsCommand.cs" />
     <Compile Include="ViewModel\Commands\SearchDocumentsCommand.cs" />
     <Compile Include="ViewModel\Commands\ShowEpdCommand.cs" />
