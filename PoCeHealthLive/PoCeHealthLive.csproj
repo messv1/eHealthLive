@@ -139,6 +139,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\DocumentAttributes.cs" />
+    <Compile Include="Model\DocumentReference.cs" />
     <Compile Include="ViewModel\Commands\BrowseDocumentsCommand.cs" />
     <Compile Include="ViewModel\Commands\SearchDocumentsCommand.cs" />
     <Compile Include="ViewModel\Commands\ShowEpdCommand.cs" />
