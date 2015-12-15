@@ -9,9 +9,9 @@
     <Window.DataContext>
         <local:MainWindowViewModel />
     </Window.DataContext>
-
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -20,59 +20,41 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="28" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="120" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label x:Name="lblLastName" Content="Last Name:" />
-        <TextBox x:Name="txtBoxLastName" Text="{Binding ParaLastName}" Grid.Column="1" Margin="3"/>
+        <TextBox x:Name="txtBoxLastName" Text="{Binding ParaFamilyName, Mode=TwoWay}" Grid.Column="1" Grid.ColumnSpan="2" Margin="3"/>
         <Label x:Name="lblFirstName" Content="First Name:" Grid.Row="1" />
-        <TextBox x:Name="txtBoxFirstName" Text ="{Binding ParaFirstName}" Grid.Column="1" Grid.Row="1" Margin="3"/>
+        <TextBox x:Name="txtBoxFirstName" Text ="{Binding ParaGivenName, Mode=TwoWay }" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Margin="3"/>
         <Label x:Name="lblDob" Content="Date of birth:" Grid.Row="2"/>
-        <TextBox x:Name="txtBoxDbo" Text="{Binding ParaDob}" Grid.Column="2" Grid.Row="2" Margin="3"/>
-        <Button x:Name="buttonSearch" Content="Search" Command="{Binding SearchPatientCommand}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" MinWidth="80" Margin="3"/>
-        <DataGrid x:Name="PatientInfo" AutoGenerateColumns="False" ItemsSource="{Binding PatientInfo}" Grid.Column="1" Grid.Row="4" MinWidth="266" MinHeight="115">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding PatID}"/>
-                <DataGridTextColumn Header="Last Name"  Binding="{Binding LastName}" />
-                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
-                <DataGridTextColumn Header="DOB" Binding="{Binding Dob}" />
-                <DataGridTextColumn Header="ipid" Binding="{Binding IpID}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button x:Name="buttonConnect" Content="Connect" Command="{Binding ConnectToInfomedCommand}" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" MinWidth="80" Margin="3" />
-        <Button x:Name="buttonDisconnect" Content="Disconnect" Command="{Binding DisconnectInfomedCommand }" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" MinWidth="80" Margin="3"/>
-        <Button x:Name="buttonPublish" Content="Publish document" Command="{Binding ShowWindowPublishDocumentCommand}" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right" MinWidth="80" Margin="3" />
-        <Button x:Name="buttonEPD" Content="EPD" Command="{Binding ShowEpdCommand }" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" MinWidth="80" Margin="3" />
+        <TextBox x:Name="txtBoxDbo" Text="{Binding ParaDob, Mode=TwoWay }" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Margin="3"/>
+        <Button x:Name="buttonClear" Content="Clear" Command="{Binding ClearDemographicDataCommand}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" MinWidth="80" Margin="3"/>
+        <Button x:Name="buttonSearch" Content="Search" Command="{Binding SearchPatientCommand}" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Right" MinWidth="80" Margin="3"/>
+        <ListView Margin="0,10,0,0"
+                  x:Name="ListViewPatientInfo"
+                  Grid.Column="0" Grid.ColumnSpan="3"
+                  Grid.Row="4"
+                  ItemsSource="{Binding PatientInfo}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding PatID}"
+                                    Header="ID"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding FamilyName}"
+                                    Header="Family Name"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding GivenName}"
+                                    Header="Given Name"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Dob}"
+                                    Header="DOB"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding IpID}"
+                                    Header="ipid"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="buttonConnect" Content="Connect Infomed" Command="{Binding ConnectToInfomedCommand}" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" MinWidth="80" Margin="3" />
+        <Button x:Name="buttonDisconnect" Content="Disconnect Infomed" Command="{Binding DisconnectInfomedCommand }" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right" MinWidth="80" Margin="3"/>
+        <Button x:Name="buttonPublish" Content="Publish document" Command="{Binding ShowWindowPublishDocumentCommand}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" HorizontalAlignment="Right" MinWidth="80" Margin="3" />
+        <Button x:Name="buttonEPD" Content="Open EPD" Command="{Binding ShowEpdCommand }" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Right" MinWidth="80" Margin="3" />
     </Grid>    
-    
-<!--    <Grid RenderTransformOrigin="0.479,0.481">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="0*"/>
-        </Grid.ColumnDefinitions>
-        <Button x:Name="buttonSearch" Content="Search" Command="{Binding SearchPatientCommand}" HorizontalAlignment="Left" Margin="175,133,0,0" VerticalAlignment="Top" Width="75" Height="20" />
-        <Label x:Name="lblFirstName" Content="First Name" HorizontalAlignment="Left" Margin="39,66,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.607,-1.013" Height="23" Width="67"/>
-        <Label x:Name="lblLastName" Content="Last Name" HorizontalAlignment="Left" Margin="40,40,0,0" VerticalAlignment="Top" Height="23" Width="66"/>
-        <Label x:Name="lblDob" Content="Date of birth" HorizontalAlignment="Left" Margin="40,94,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.863,-1.577" Height="23" Width="77"/>
-        <TextBox x:Name="txtBoxLastName" Text="{Binding ParaLastName}" HorizontalAlignment="Left" Height="23" Margin="118,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132"/>
-        <TextBox x:Name="txtBoxFirstName" Text ="{Binding ParaFirstName}" HorizontalAlignment="Left" Height="23" Margin="118,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132"/>
-        <TextBox x:Name="txtBoxDbo" Text="{Binding ParaDob}" HorizontalAlignment="Left" Height="23" Margin="118,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" />
-        <GroupBox x:Name="gBoxPatient" Header="Patient Search" HorizontalAlignment="Left" Margin="29,12,0,0" VerticalAlignment="Top" Height="157" Width="231"/>
-         <Button x:Name="buttonSearch" Content="Search" Command="{Binding SearchPatientCommand}"   Width="75" Height="20" />
-        <DataGrid x:Name="PatientInfo" AutoGenerateColumns="False" ItemsSource="{Binding PatientInfo}" HorizontalAlignment="Left" Margin="29,219,0,0" VerticalAlignment="Top" Width="266" Height="115">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding PatID}"/>
-                <DataGridTextColumn Header="Last Name"  Binding="{Binding LastName}" />
-                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
-                <DataGridTextColumn Header="DOB" Binding="{Binding Dob}" />
-                <DataGridTextColumn Header="ipid" Binding="{Binding IpID}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button x:Name="buttonConnect" Content="Connect" Command="{Binding ConnectToInfomedCommand}" HorizontalAlignment="Left" Margin="30,349,0,0" VerticalAlignment="Top" Width="76" Height="20"/>
-        <Button x:Name="buttonDisconnect" Content="Disconnect" Command="{Binding DisconnectInfomedCommand }" HorizontalAlignment="Left" Margin="135,349,0,0" VerticalAlignment="Top" Width="76" Height="20"/>
-        <Button x:Name="buttonPublish" Content="Publish document" Command="{Binding ShowWindowPublishDocumentCommand}" HorizontalAlignment="Left" Margin="288,97,0,0" VerticalAlignment="Top" Width="104" />
-        <Button x:Name="buttonEPD" Content="EPD" Command="{Binding ShowEpdCommand }" HorizontalAlignment="Left" Margin="288,133,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.8,-0.05"/>
-    </Grid>
-    -->
 </Window>

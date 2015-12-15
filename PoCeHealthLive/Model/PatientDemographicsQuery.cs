@@ -101,7 +101,8 @@ namespace PoCeHealthLive.Model
             return affinityDomain;
         }
 
-        public bool patientDemographicsQueryID(TriaMedPatient pat, Patient patient)
+        //public bool patientDemographicsQueryID(TriaMedPatient pat, Patient patient)
+        public bool patientDemographicsQueryID(DemographicData pat, Patient patient)
         {
             
             AffinityDomain affinityDomain = getInfomedAffinityDomian();

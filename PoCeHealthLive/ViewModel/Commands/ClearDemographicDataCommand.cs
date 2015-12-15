@@ -7,12 +7,12 @@ using System.Windows.Input;
 
 namespace PoCeHealthLive.ViewModel.Commands
 {
-    public class ConnectToInfomedCommand : ICommand
+    public class ClearDemographicDataCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
         public MainWindowViewModel ViewModel { get; set; }
 
-        public ConnectToInfomedCommand(MainWindowViewModel viewModel)
+        public ClearDemographicDataCommand(MainWindowViewModel viewModel)
         {
             this.ViewModel = viewModel;
         }
@@ -24,7 +24,7 @@ namespace PoCeHealthLive.ViewModel.Commands
 
         public void Execute(object parameter)
         {
-            this.ViewModel.ConnectToInfomed();
+            this.ViewModel.ClearDemographicParameters();
         }
     }
 }
