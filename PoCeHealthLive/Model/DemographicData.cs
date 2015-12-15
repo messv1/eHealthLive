@@ -63,17 +63,6 @@ namespace PoCeHealthLive.Model
                         GivenName = null;
                         Dob = null;
                     }
-                    //administrativeData[0] = result.txName1;
-                    //administrativeData[1] = result.txName2;
-                    //administrativeData[2] = String.Format("{0:dd/MM/yyyy}", result.dtGeburtstag);
-                    //administrativeData[3] = result.inNummer.ToString();
-                    //administrativeData[4] = null;
-                    //lastName = result.txName1;
-                    //firstName = result.txName2;
-                    ////dob = String.Format("{0:MM/dd/yyyy}", result.dtGeburtstag);
-                    //dob = String.Format("{0:dd/MM/yyyy}", result.dtGeburtstag);
-                    //patID = result.inNummer.ToString();
-                    //ipID = null;
                 }            
             }
             catch { }

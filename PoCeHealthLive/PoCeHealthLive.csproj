@@ -150,7 +150,6 @@
     <Compile Include="ViewModel\EpdDocumentViewModel.cs" />
     <Compile Include="ViewModel\PublishDocumentViewModel.cs" />
     <Compile Include="Model\PatientDemographicsQuery.cs" />
-    <Compile Include="Model\TriaMedPatient.cs" />
     <Compile Include="PraxiCenter.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

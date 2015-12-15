@@ -14,9 +14,7 @@ namespace PoCeHealthLive.ViewModel
     public class MainWindowViewModel : BaseViewModel
     {
         Patient patient = new Patient();
-        //TriaMedPatient pat = new TriaMedPatient();
         DemographicData pat = new DemographicData();
-
 
         private PublishDocumentViewModel childViewModelPublishDocument;
         private EpdDocumentViewModel childViewModelEpdDocument;
@@ -28,11 +26,14 @@ namespace PoCeHealthLive.ViewModel
         public ClearDemographicDataCommand ClearDemographicDataCommand { get; set; }
         public ShowEpdCommand ShowEpdCommand { set; get; }
 
-
+        // Property backing fields.
         string paraGivenName;
         string paraFamilyName;
         string paraDob;
 
+        /// <summary>
+        /// Gets or sets the Given name.
+        /// </summary>
         public string ParaGivenName {
             get { return this.paraGivenName; }
             set
@@ -42,6 +43,9 @@ namespace PoCeHealthLive.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets or sets the Family name.
+        /// </summary>
         public string ParaFamilyName
         {
             get { return this.paraFamilyName; }
@@ -51,6 +55,10 @@ namespace PoCeHealthLive.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        /// <summary>
+        /// Gets or sets the date of birth.
+        /// </summary>
         public string ParaDob {
             get { return this.paraDob; }
             set
@@ -60,7 +68,6 @@ namespace PoCeHealthLive.ViewModel
             }
         }
 
-        //public ObservableCollection<TriaMedPatient> PatientInfo { get; set; }
         public ObservableCollection<DemographicData> PatientInfo { get; set; }
 
         /// <summary>
@@ -68,7 +75,6 @@ namespace PoCeHealthLive.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
-            /*PatientInfo = new ObservableCollection<TriaMedPatient>()*/;
             PatientInfo = new ObservableCollection<DemographicData>();
             childViewModelPublishDocument = new PublishDocumentViewModel(patient);
             childViewModelEpdDocument = new EpdDocumentViewModel();
@@ -96,7 +102,6 @@ namespace PoCeHealthLive.ViewModel
             }
             else PatientInfo.Clear();
             
-
             // Patient
             Name patientName = new Name(pat.GivenName, pat.FamilyName);
             patient.addName(patientName);

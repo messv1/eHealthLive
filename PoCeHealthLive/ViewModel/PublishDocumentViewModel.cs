@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using PoCeHealthLive.Model;
+using org.ehealth_connector.cda.enums;
 
 namespace PoCeHealthLive.ViewModel
 {
@@ -230,7 +231,7 @@ namespace PoCeHealthLive.ViewModel
             XUAContext context = XUAContext.getInstance();
 
             SubmissionSetMetadata subSet;
-            String pdfFilePath = FilePath;
+            //String pdfFilePath = FilePath;
 
 
             try
@@ -301,38 +302,31 @@ namespace PoCeHealthLive.ViewModel
 
         private void completeMetadata(DocumentMetadata metaData)
         {
-            //java.util.List ids;
-            //ids = patient.getIds();
-            // Will be removed
+            string documentTitle = "test title";
             Patient patient = new Patient();
-            patient.addId(new Identificator("2.16.756.5.30.1.120.10.1", "214211038")); // Patient Messerli Vinzenz
-            metaData.setPatient(patient);
-            
-            metaData.setCodedLanguage(LanguageCode.DEUTSCH_CODE);
-            metaData.setTypeCode(
-                    new Code("2.16.840.1.113883.6.1", "34817-7", "Otorhinolaryngology Evaluation and Management Note"));
+            patient.addName(new Name("Vinzenz", "Messerli"));
+            java.util.Date birthdate = new java.util.Date();
+            patient.setBirthday(birthdate);
+            AdministrativeGender sex = AdministrativeGender.MALE;
+            patient.setAdministrativeGender(sex);
 
-            // create a random id according to id
+            patient.addId(new Identificator("2.16.756.5.30.1.120.10.1", "102836133"));
+            //patient.addId(new Identificator("2.16.756.5.30.1.120.10.1", "214211038")); Messerli Vinzenz        
+            metaData.setPatient(patient);
+            metaData.setCodedLanguage(LanguageCode.DEUTSCH_CODE);
+
+            // create a random id accoding to id
             // fixme    long rand = Math.round((java.math.Math.random() * 100000000.0));
             Random rnd = new Random();
             long rand = rnd.Next(0, 99999);
-
             String docId = config.getEmrId() + "." + rand;
             metaData.setUniqueId(docId);
 
-            metaData.setTitle("test Oliver Document No " + docId);
+            metaData.setTitle(documentTitle + docId);
+            metaData.setClassCode(new Code("2.16.756.5.30.1.120.20.1", "DTC01", "2.16.756.5.30.1.120.20.1^DTC01"));
+            metaData.setTypeCode(new Code("2.16.756.5.30.1.120.20.2", "11488-4", "2.16.756.5.30.1.120.20.2^11488-4"));
 
-            // metaData.setLanguage("de-CH");
-
-            // metaData.setTypeCode(new Code("2.16.840.1.113883.6.1", "34817-7",
-            // "Otorhinolaryngology Evaluation and Management Note"));
-            metaData.setTypeCode(new Code("2.16.756.5.30.1.120.20.2", "11490-0", "2.16.756.5.30.1.120.20.2^11490-0"));
-            // metaData.setClassCode(new Code("1.3.6.1.4.1.21367.100.1",
-            // "DEMO-Procedure", "Procedure"));
-            metaData.setClassCode(new Code("2.16.756.5.30.1.120.20.1", "DTC06", "2.16.756.5.30.1.120.20.1^DTC06"));
-
-            // metaData.setFormatCode(new Code("1.3.6.1.4.1.19376.1.2.3",
-            // "urn:ihe:rad:TEXT", "urn:ihe:rad:TEXT"));
+            // default value pdf    
             metaData.setFormatCode(new Code("1.3.6.1.4.1.19376.1.2.3", "urn:ihe:iti:xds-sd:pdf:2008",
                     "1.3.6.1.4.1.19376.1.2.3^urn:ihe:iti:xds-sd:pdf:2008"));
 
@@ -340,38 +334,99 @@ namespace PoCeHealthLive.ViewModel
             // XDSSubmissionSet.sourceId
             metaData.setDocSourceActorOrganizationId(config.getEmrId());
 
-            metaData.setHealthcareFacilityTypeCode(new Code("2.16.840.1.113883.5.11", "AMB", "Ambulance"));
+            metaData.setHealthcareFacilityTypeCode(new Code("2.16.756.5.30.1.127.3.2.1.19", "190010", "2.16.756.5.30.1.127.3.2.1.19^190010"));
 
-            // metaData.setPracticeSettingCode(new Code("2.16.840.1.113883.6.96",
-            // "408478003", "Critical Care Medicine"));
             metaData.setPracticeSettingCode(
-                    new Code("2.16.756.5.30.1.127.3.2.1.26", "260002", "2.16.756.5.30.1.127.3.2.1.26^260002"));
-            // 2.16.756.5.30.1.127.3.2.1.19
+                    new Code("2.16.756.5.30.1.127.3.2.1.26", "260059", "2.16.756.5.30.1.127.3.2.1.26^260059"));
 
             metaData.addConfidentialityCode(new Code("2.16.756.5.30.1.120.20.3", "N", "2.16.756.5.30.1.120.20.3^N"));
 
-            // metaData.addAuthor(new Author(new Name("","Infomed client test Oliver
-            // Egger"),"2.16.756.5.30.1.120.14.101"));
-
-            metaData.setSourcePatientId(new Identificator("2.16.756.5.30.1.120.10.1", "214211038"));
-
-            //metaData.setSourcePatientId((Identificator)ids.get(0));
-            //Debug.WriteLine((Identificator)ids.get(0));
+            metaData.setSourcePatientId(new Identificator("2.16.756.5.30.1.120.10.1", "102836133"));
 
             SourcePatientInfoType sourceInfo = Hl7v2Factory.eINSTANCE.createSourcePatientInfoType();
             sourceInfo.setPatientSex(patient.getAdministrativeGenderCode().toString());
-            //sourceInfo.setPatientSex("M");
             XPN xcn = Hl7v2Factory.eINSTANCE.createXPN();
-            //xcn.setFamilyName("Messerli");
             xcn.setFamilyName(patient.getName().getFamilyName());
-            //xcn.setGivenName("Vinzenz");
             xcn.setGivenName(patient.getName().getGivenNames());
             sourceInfo.getPatientName().add(xcn);
             sourceInfo.getPatientIdentifier()
-                .add(XdsUtil.convertEhcIdentificator(new Identificator("2.16.756.5.30.1.120.10.1", "214211038")));
-
+                .add(XdsUtil.convertEhcIdentificator((Identificator)patient.getIds().get(0)));
             metaData.getMdhtDocumentEntryType().setSourcePatientInfo(sourceInfo);
             metaData.getMdhtDocumentEntryType().getAuthors().add(this.generateAuthor());
+
+
+
+            ////java.util.List ids;
+            ////ids = patient.getIds();
+            //// Will be removed
+            //Patient patient = new Patient();
+            //patient.addId(new Identificator("2.16.756.5.30.1.120.10.1", "214211038")); // Patient Messerli Vinzenz
+            //metaData.setPatient(patient);
+
+            //metaData.setCodedLanguage(LanguageCode.DEUTSCH_CODE);
+            //metaData.setTypeCode(
+            //        new Code("2.16.840.1.113883.6.1", "34817-7", "Otorhinolaryngology Evaluation and Management Note"));
+
+            //// create a random id according to id
+            //// fixme    long rand = Math.round((java.math.Math.random() * 100000000.0));
+            //Random rnd = new Random();
+            //long rand = rnd.Next(0, 99999);
+
+            //String docId = config.getEmrId() + "." + rand;
+            //metaData.setUniqueId(docId);
+
+            //metaData.setTitle("test Oliver Document No " + docId);
+
+            //// metaData.setLanguage("de-CH");
+
+            //// metaData.setTypeCode(new Code("2.16.840.1.113883.6.1", "34817-7",
+            //// "Otorhinolaryngology Evaluation and Management Note"));
+            //metaData.setTypeCode(new Code("2.16.756.5.30.1.120.20.2", "11490-0", "2.16.756.5.30.1.120.20.2^11490-0"));
+            //// metaData.setClassCode(new Code("1.3.6.1.4.1.21367.100.1",
+            //// "DEMO-Procedure", "Procedure"));
+            //metaData.setClassCode(new Code("2.16.756.5.30.1.120.20.1", "DTC06", "2.16.756.5.30.1.120.20.1^DTC06"));
+
+            //// metaData.setFormatCode(new Code("1.3.6.1.4.1.19376.1.2.3",
+            //// "urn:ihe:rad:TEXT", "urn:ihe:rad:TEXT"));
+            //metaData.setFormatCode(new Code("1.3.6.1.4.1.19376.1.2.3", "urn:ihe:iti:xds-sd:pdf:2008",
+            //        "1.3.6.1.4.1.19376.1.2.3^urn:ihe:iti:xds-sd:pdf:2008"));
+
+            //// used for submission-set : XDSSubmissionSet.uniqueId and
+            //// XDSSubmissionSet.sourceId
+            //metaData.setDocSourceActorOrganizationId(config.getEmrId());
+
+            //metaData.setHealthcareFacilityTypeCode(new Code("2.16.840.1.113883.5.11", "AMB", "Ambulance"));
+
+            //// metaData.setPracticeSettingCode(new Code("2.16.840.1.113883.6.96",
+            //// "408478003", "Critical Care Medicine"));
+            //metaData.setPracticeSettingCode(
+            //        new Code("2.16.756.5.30.1.127.3.2.1.26", "260002", "2.16.756.5.30.1.127.3.2.1.26^260002"));
+            //// 2.16.756.5.30.1.127.3.2.1.19
+
+            //metaData.addConfidentialityCode(new Code("2.16.756.5.30.1.120.20.3", "N", "2.16.756.5.30.1.120.20.3^N"));
+
+            //// metaData.addAuthor(new Author(new Name("","Infomed client test Oliver
+            //// Egger"),"2.16.756.5.30.1.120.14.101"));
+
+            //metaData.setSourcePatientId(new Identificator("2.16.756.5.30.1.120.10.1", "214211038"));
+
+            ////metaData.setSourcePatientId((Identificator)ids.get(0));
+            ////Debug.WriteLine((Identificator)ids.get(0));
+
+            //SourcePatientInfoType sourceInfo = Hl7v2Factory.eINSTANCE.createSourcePatientInfoType();
+            //sourceInfo.setPatientSex(patient.getAdministrativeGenderCode().toString());
+            ////sourceInfo.setPatientSex("M");
+            //XPN xcn = Hl7v2Factory.eINSTANCE.createXPN();
+            ////xcn.setFamilyName("Messerli");
+            //xcn.setFamilyName(patient.getName().getFamilyName());
+            ////xcn.setGivenName("Vinzenz");
+            //xcn.setGivenName(patient.getName().getGivenNames());
+            //sourceInfo.getPatientName().add(xcn);
+            //sourceInfo.getPatientIdentifier()
+            //    .add(XdsUtil.convertEhcIdentificator(new Identificator("2.16.756.5.30.1.120.10.1", "214211038")));
+
+            //metaData.getMdhtDocumentEntryType().setSourcePatientInfo(sourceInfo);
+            //metaData.getMdhtDocumentEntryType().getAuthors().add(this.generateAuthor());
         }
 
         private AuthorType generateAuthor()
