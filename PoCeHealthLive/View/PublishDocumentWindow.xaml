@@ -24,7 +24,11 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label x:Name="lblFilePath" Content="Select file:" />
-        <TextBox x:Name="txtBoxFilePath" Text="{Binding FilePath}" Grid.Column="1" Margin="3" />
+        <TextBox x:Name="txtBoxFilePath" 
+                 Text="{Binding FilePath}" 
+                 Grid.Column="1" 
+                 Margin="3" 
+                 />
         <Button x:Name="buttonBrowse" Command="{Binding BrowseDocumentsCommand}" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Right" MinWidth="80" Margin="3" Content="Browse"/>
         <Label x:Name="lblTitle" Grid.Row="2" Content="Title:"/>
         <TextBox x:Name="txtBoxTitle" Text="{Binding DocumentTitle}" Grid.Row="2" Grid.Column="2" Margin="3" />

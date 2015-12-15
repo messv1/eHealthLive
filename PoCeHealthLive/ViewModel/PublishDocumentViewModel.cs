@@ -302,7 +302,6 @@ namespace PoCeHealthLive.ViewModel
 
         private void completeMetadata(DocumentMetadata metaData)
         {
-            string documentTitle = "test title";
             Patient patient = new Patient();
             patient.addName(new Name("Vinzenz", "Messerli"));
             java.util.Date birthdate = new java.util.Date();
@@ -321,27 +320,34 @@ namespace PoCeHealthLive.ViewModel
             long rand = rnd.Next(0, 99999);
             String docId = config.getEmrId() + "." + rand;
             metaData.setUniqueId(docId);
-
-            metaData.setTitle(documentTitle + docId);
-            metaData.setClassCode(new Code("2.16.756.5.30.1.120.20.1", "DTC01", "2.16.756.5.30.1.120.20.1^DTC01"));
-            metaData.setTypeCode(new Code("2.16.756.5.30.1.120.20.2", "11488-4", "2.16.756.5.30.1.120.20.2^11488-4"));
-
-            // default value pdf    
-            metaData.setFormatCode(new Code("1.3.6.1.4.1.19376.1.2.3", "urn:ihe:iti:xds-sd:pdf:2008",
-                    "1.3.6.1.4.1.19376.1.2.3^urn:ihe:iti:xds-sd:pdf:2008"));
+            // Set Document title
+            metaData.setTitle(DocumentTitle + docId);
+            // Set ClassCode
+            metaData.setClassCode(new Code("2.16.756.5.30.1.120.20.1", SelectedClassCode,
+                    "2.16.756.5.30.1.120.20.1^" + SelectedClassCode));
+            // Set TypeCode
+            metaData.setTypeCode(new Code("2.16.756.5.30.1.120.20.2", SelectedTypeCode,
+                "2.16.756.5.30.1.120.20.2^" + SelectedTypeCode));
+            // Set FormatCode (default pdf)    
+            metaData.setFormatCode(new Code("1.3.6.1.4.1.19376.1.2.3", SelectedFormatCode,
+                    "1.3.6.1.4.1.19376.1.2.3^" + SelectedFormatCode));
+            // Set HealthcareFacilityTypeCode
+            metaData.setHealthcareFacilityTypeCode(new Code("2.16.756.5.30.1.127.3.2.1.19", SelectedHealthCareFacilityCode,
+                "2.16.756.5.30.1.127.3.2.1.19^" + SelectedHealthCareFacilityCode));
+            // Set PracticeSettingCode
+            metaData.setPracticeSettingCode(
+                    new Code("2.16.756.5.30.1.127.3.2.1.26", SelectedPracticeSettingCode,
+                    "2.16.756.5.30.1.127.3.2.1.26^" + SelectedPracticeSettingCode));
+            // Set ConfidentialityCode
+            metaData.addConfidentialityCode(new Code("2.16.756.5.30.1.120.20.3", SelectedConfidentialityCode,
+                "2.16.756.5.30.1.120.20.3^" + SelectedConfidentialityCode));
 
             // used for submission-set : XDSSubmissionSet.uniqueId and
             // XDSSubmissionSet.sourceId
             metaData.setDocSourceActorOrganizationId(config.getEmrId());
-
-            metaData.setHealthcareFacilityTypeCode(new Code("2.16.756.5.30.1.127.3.2.1.19", "190010", "2.16.756.5.30.1.127.3.2.1.19^190010"));
-
-            metaData.setPracticeSettingCode(
-                    new Code("2.16.756.5.30.1.127.3.2.1.26", "260059", "2.16.756.5.30.1.127.3.2.1.26^260059"));
-
-            metaData.addConfidentialityCode(new Code("2.16.756.5.30.1.120.20.3", "N", "2.16.756.5.30.1.120.20.3^N"));
-
-            metaData.setSourcePatientId(new Identificator("2.16.756.5.30.1.120.10.1", "102836133"));
+            java.util.List ids = patient.getIds();
+            metaData.setSourcePatientId((Identificator)ids.get(0));
+            //metaData.setSourcePatientId(new Identificator("2.16.756.5.30.1.120.10.1", "102836133"));
 
             SourcePatientInfoType sourceInfo = Hl7v2Factory.eINSTANCE.createSourcePatientInfoType();
             sourceInfo.setPatientSex(patient.getAdministrativeGenderCode().toString());

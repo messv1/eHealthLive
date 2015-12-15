@@ -305,8 +305,6 @@ namespace PoCeHealthLive.ViewModel
             }
             else { classCodes = null; }
 
-            //if(classCodes == null || classCodes.Length == 0 )
-
             // Set DateTimeRange Attribute
             DateTimeRangeAttributes name = DateTimeRangeAttributes.CREATION_TIME;
             java.util.Date from = new java.util.Date(2015, 12, 11);
