@@ -8,6 +8,7 @@ using org.ehealth_connector.security;
 using org.ehealth_connector.security.xua;
 using org.openhealthtools.ihe.atna.nodeauth;
 using org.openhealthtools.ihe.atna.nodeauth.context;
+using org.openhealthtools.ihe.common.ebxml._3._0.rim;
 using org.openhealthtools.ihe.xds.response;
 using PoCeHealthLive.Model;
 using PoCeHealthLive.ViewModel.Commands;
@@ -248,44 +249,34 @@ namespace PoCeHealthLive.ViewModel
 
         public void SearchDocumentsInRegistry()
         {
-            Debug.WriteLine("Methode SearchDocumentInRegistry ausgeführt");
-            //SetSearchAttributes();
             ConvenienceCommunication conCom = getInfomedCommunication();
-            java.util.List documentEntries;
             XDSQueryResponseType qr;
 
             initConfig();
 
+            // Set Parameters for stored query request
             qr = conCom.queryDocumentsReferencesOnly(SetSearchAttributes());
 
-            // Get  document IDs of references 
-            documentEntries = qr.getReferences();
-            string sKeyWordDocumentIdStart = "urn:uuid";
-            string sKeyWordDocumentIdEnd = ")";
-            String[] docUUIDs = new String[60];
+            //
+            List<ObjectRefType> docReferences = new List<ObjectRefType>();
+            qr.getReferences().size();
 
-            for (int i = 0; i < documentEntries.size(); ++i)
+            for (int i = 0; i < qr.getReferences().size(); i++)
             {
-                string sourceString = documentEntries.get(i).ToString();
-                int keyWordDocumentIdBegin = sourceString.IndexOf(sKeyWordDocumentIdStart);
-                string DocumentId = sourceString.Substring(keyWordDocumentIdBegin);
-                int ikeyWordDocumentIdEnd = DocumentId.IndexOf(sKeyWordDocumentIdEnd);
-                DocumentId = DocumentId.Substring(0, ikeyWordDocumentIdEnd);
-                //RecievedDocumentReferences.Add(new DocumentReference(DocumentId));
-                docUUIDs[i] = DocumentId;
-                System.Console.WriteLine(DocumentId);
+                ObjectRefType objectRefType = (ObjectRefType)qr.getReferences().get(i);
+                objectRefType.getId();
+                docReferences.Add(objectRefType);
             }
 
-            ShowQueryDocumentsReferencesResult(docUUIDs);
+            DisplayDocumentsReferencesResponse(docReferences);
         }
+        private void DisplayDocumentsReferencesResponse(List<ObjectRefType> docReferences)
+        {            
+           RecievedDocumentReferences.Clear();
 
-        private void ShowQueryDocumentsReferencesResult(String[] docUUIDs)
-        {
-
-            RecievedDocumentReferences.Clear();
-            for (int i = 0; i < docUUIDs.Length; i++)
+            for (int i = 0; i < docReferences.Count(); i++)
             {
-                RecievedDocumentReferences.Add(new DocumentReference(docUUIDs[i]));
+                RecievedDocumentReferences.Add(new DocumentReference(docReferences[i].getId()));
             }
         }
 
