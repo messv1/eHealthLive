@@ -115,11 +115,11 @@ namespace PoCeHealthLive.ViewModel
             patient = request.patientDemographicsQueryID(patient);
             java.util.List ids;
 
-            ids= patient.getIds();
+            ids = patient.getIds();
             // Set Infomed ID of first patien
-            demographicData.IpID = ((Identificator)ids.get(0)).getExtension();
+            //demographicData.IpID = ((Identificator)ids.get(0)).getExtension();
             // get Infomed Folder ID
-            demographicData.FolderID = ((Identificator)ids.get(1)).getExtension();
+            demographicData.FolderID = ((Identificator)ids.get(0)).getExtension();
 
             PatientInfo.Clear();
             PatientInfo.Add(demographicData);
@@ -150,6 +150,7 @@ namespace PoCeHealthLive.ViewModel
             demographicData.Dob = null;
             demographicData.FolderID = null;
             demographicData.IpID = null;
+            patient = null;
             PatientInfo.Clear();
         }
 

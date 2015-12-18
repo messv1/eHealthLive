@@ -129,7 +129,7 @@ namespace PoCeHealthLive.Model
                 // get IDs of first patient
                 ids = ((Patient)patients.get(0)).getIds();
 
-                patient.addId((Identificator)ids.get(0));
+                //patient.addId((Identificator)ids.get(0));
                 patient.addId((Identificator)ids.get(1));
             }
             return patient;
