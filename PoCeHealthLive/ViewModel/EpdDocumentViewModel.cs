@@ -24,6 +24,16 @@ namespace PoCeHealthLive.ViewModel
 {
     class EpdDocumentViewModel : BaseViewModel
     {
+        // Property backing fields.
+        string selectedClassCode;
+        string selectedHealthCareFacilityCode;
+        string selectedConfidentialityCode;
+        string selectedPracticeSettingCode;
+        string selectedFormatCode;
+        string documentReferenceCounter;
+
+        private XUAConfig config = XUAConfig.getInstance();
+
         public SearchDocumentsCommand SearchDocumentsCommand { get; set; }
         public ObservableCollection<DocumentAttributes> ClassCodes { get; set; }
         public ObservableCollection<DocumentAttributes> HealthCareFacilityCodes { get; set; }
@@ -32,15 +42,14 @@ namespace PoCeHealthLive.ViewModel
         public ObservableCollection<DocumentAttributes> FormatCodes { get; set; }
         public ObservableCollection<DocumentReference> RecievedDocumentReferences { get; set; }
 
-        private XUAConfig config = XUAConfig.getInstance();
-
-        // Property backing fields.
-        string selectedClassCode;
-        string selectedHealthCareFacilityCode;
-        string selectedConfidentialityCode;
-        string selectedPracticeSettingCode;
-        string selectedFormatCode;
-
+        public string  DocumentReferencesCounter {
+            get { return this.documentReferenceCounter; }
+            set
+            {
+                documentReferenceCounter = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the Class Code.
@@ -278,6 +287,9 @@ namespace PoCeHealthLive.ViewModel
             {
                 RecievedDocumentReferences.Add(new DocumentReference(docReferences[i].getId()));
             }
+
+            // Set the DocumentReferencesCounter 
+            DocumentReferencesCounter = docReferences.Count().ToString() + " documents found";
         }
 
         public FindDocumentsQuery SetSearchAttributes()

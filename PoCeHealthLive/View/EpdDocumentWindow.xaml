@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PoCeHealthLive.View"
         mc:Ignorable="d"
-        Title="EpdDocumentWindow" Height="450" Width="400">
+        Title="EpdDocumentWindow" Height="460" Width="400">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -22,6 +22,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="150" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label x:Name= "lblClassCodes" Content="Class Code:" />
         <ComboBox 
@@ -102,7 +103,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
+        <Label x:Name= "lblDocumentReferencesCounter" Content="{Binding DocumentReferencesCounter, Mode=TwoWay}" Grid.Row="9" Grid.Column="3" HorizontalAlignment="Right" Background="Beige" />
 
     </Grid>
 </Window>
