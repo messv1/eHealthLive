@@ -101,11 +101,11 @@ namespace PoCeHealthLive.Model
             return affinityDomain;
         }
 
-        //public bool patientDemographicsQueryID(TriaMedPatient pat, Patient patient)
-        public bool patientDemographicsQueryID(DemographicData pat, Patient patient)
-        {
-            
+        //public bool patientDemographicsQueryID(TriaMedPatient demographicData, Patient patient)
+        public Patient patientDemographicsQueryID(Patient patient)
+        {     
             AffinityDomain affinityDomain = getInfomedAffinityDomian();
+
             MasterPatientIndexQuery mpiQuery = new MasterPatientIndexQuery(affinityDomain.getPdqDestination());
             Name name = new Name(patient.getName().getGivenNames(), patient.getName().getFamilyName());
 
@@ -115,11 +115,11 @@ namespace PoCeHealthLive.Model
             {         
                 mpiQuery.setPatientDateOfBirth(patient.getBirthday());
             }
+
+            mpiQuery.addDomainToReturn("2.16.756.5.30.1.120.10.1");
+
             MasterPatientIndexQueryResponse ret = ConvenienceMasterPatientIndexV3.queryPatientDemographics(mpiQuery,
                 affinityDomain);
-
-            Debug.WriteLine("succes " + ret.getSuccess());
-            Debug.WriteLine("totalNumbers " + ret.getTotalNumbers());
 
             java.util.List patients = ret.getPatients();
             java.util.List ids;
@@ -128,11 +128,11 @@ namespace PoCeHealthLive.Model
             {
                 // get IDs of first patient
                 ids = ((Patient)patients.get(0)).getIds();
-                // get Infomed ID of first patient
-                pat.IpID = ((Identificator)ids.get(0)).getExtension();
+
                 patient.addId((Identificator)ids.get(0));
+                patient.addId((Identificator)ids.get(1));
             }
-            return ret.getSuccess();
+            return patient;
         }
     }
 }

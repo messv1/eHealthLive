@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace PoCeHealthLive.Model
         public string Dob { get; set; }
         public string PatID { get; set; }
         public string IpID { get; set; }
+        public string FolderID { get; set; }
 
         public DemographicData()
         {
@@ -27,10 +29,12 @@ namespace PoCeHealthLive.Model
             this.FamilyName = familyName;
             this.Dob = dob;
             this.IpID = null;
+            this.FolderID = null;
         }
         public void getAdministrativeDataFromDB()
         {
             DateTime birthDate = new DateTime(); //(1947, 05, 15);
+            int status = 0;
 
             try
             {
@@ -47,23 +51,48 @@ namespace PoCeHealthLive.Model
                          where a.txName2 == GivenName //"Anita"
                          where b.dtGeburtstag == birthDate // "15.05.1947"
                          select new { a.txName1, a.txName2, b.dtGeburtstag, c.inNummer });
-                   
+
+
+
                 foreach (var result in q)
                 {
-  
-                    if ((result.inNummer).ToString() != null)
-                    {
+                    PatID = result.inNummer.ToString();
+                    status = 1;
+                    
+                }
 
-                        PatID = result.inNummer.ToString();
-                    }
-                    else
-                    {
-                        PatID = null;
-                        FamilyName = null;
-                        GivenName = null;
-                        Dob = null;
-                    }
-                }            
+                if(status == 0)
+                {
+                    PatID = null;
+                    FamilyName = null;
+                    GivenName = null;
+                    Dob = null;
+                    IpID = null;
+                    FolderID = null;
+
+                }
+
+
+
+
+                //foreach (var result in q)
+                //{
+
+                //    if (String.IsNullOrEmpty(result.inNummer.ToString()))
+                //    {
+
+                //        PatID = result.inNummer.ToString();
+                //    }
+                //    else
+                //    {
+                //        PatID = null;
+                //        FamilyName = null;
+                //        GivenName = null;
+                //        Dob = null;
+                //        IpID = null;
+                //        FolderID = null;
+                //    }
+                //}            
             }
             catch { }
         }

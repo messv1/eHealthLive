@@ -14,7 +14,7 @@ namespace PoCeHealthLive.ViewModel
     public class MainWindowViewModel : BaseViewModel
     {
         Patient patient = new Patient();
-        DemographicData pat = new DemographicData();
+        DemographicData demographicData = new DemographicData();
 
         private PublishDocumentViewModel childViewModelPublishDocument;
         private EpdDocumentViewModel childViewModelEpdDocument;
@@ -90,40 +90,47 @@ namespace PoCeHealthLive.ViewModel
 
         public void SearchPatient()
         {
-            pat.GivenName = ParaGivenName;
-            pat.FamilyName = ParaFamilyName;
-            pat.Dob = ParaDob;
-            pat.getAdministrativeDataFromDB();
+            demographicData.GivenName = ParaGivenName;
+            demographicData.FamilyName = ParaFamilyName;
+            demographicData.Dob = ParaDob;
+            //Get demographic patient data from triamed database
+            demographicData.getAdministrativeDataFromDB();
 
-            if (!string.IsNullOrEmpty(pat.PatID))
+            if (!string.IsNullOrEmpty(demographicData.PatID))
             {
                 PatientInfo.Clear();
-                PatientInfo.Add(pat);
+                PatientInfo.Add(demographicData);
+
+                // Create Patient
+                patient.addName(new Name(demographicData.GivenName, demographicData.FamilyName));
+                patient.setBirthday(DateUtil.date(demographicData.Dob));
+                AdministrativeGender sex = AdministrativeGender.MALE; // Abfrage von Datenbank muss noch umgesetzt werden
             }
             else PatientInfo.Clear();
-            
-            // Patient
-            Name patientName = new Name(pat.GivenName, pat.FamilyName);
-            patient.addName(patientName);
-            patient.setBirthday(DateUtil.date(pat.Dob));
-            AdministrativeGender sex = AdministrativeGender.MALE; // Abfrage von Datenbank muss noch umgesetzt werden
-
         }
 
         public void ConnectToInfomed()
         {
             PatientDemographicsQuery request = new PatientDemographicsQuery();
-            Debug.WriteLine(request.patientDemographicsQueryID(pat, patient));
+            patient = request.patientDemographicsQueryID(patient);
+            java.util.List ids;
+
+            ids= patient.getIds();
+            // Set Infomed ID of first patien
+            demographicData.IpID = ((Identificator)ids.get(0)).getExtension();
+            // get Infomed Folder ID
+            demographicData.FolderID = ((Identificator)ids.get(1)).getExtension();
+
             PatientInfo.Clear();
-            PatientInfo.Add(pat);
+            PatientInfo.Add(demographicData);
         }
 
         public void DisconnectInfomed()
         {
             // unklar wie bestehende Id eines Patienten gelöscht werden kann.
-            pat.IpID = null;
+            demographicData.IpID = null;
             PatientInfo.Clear();
-            PatientInfo.Add(pat);
+            PatientInfo.Add(demographicData);
         }
 
         public void ShowWindowPublishDocument()
@@ -138,9 +145,11 @@ namespace PoCeHealthLive.ViewModel
             ParaGivenName = "";
             ParaFamilyName = "";
             ParaDob = "";
-            pat.FamilyName = null;
-            pat.GivenName = null;
-            pat.Dob = null;
+            demographicData.FamilyName = null;
+            demographicData.GivenName = null;
+            demographicData.Dob = null;
+            demographicData.FolderID = null;
+            demographicData.IpID = null;
             PatientInfo.Clear();
         }
 
