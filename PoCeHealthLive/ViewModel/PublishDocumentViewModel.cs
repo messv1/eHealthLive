@@ -1,5 +1,4 @@
 ﻿using ikvm.extensions;
-using java.io;
 using java.net;
 using org.ehealth_connector.common;
 using org.ehealth_connector.communication;
@@ -13,15 +12,9 @@ using org.openhealthtools.ihe.xds.document;
 using org.openhealthtools.ihe.xds.metadata;
 using org.openhealthtools.ihe.xds.metadata.impl;
 using org.openhealthtools.ihe.xds.response;
-using PoCeHealthLive.View;
 using PoCeHealthLive.ViewModel.Commands;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using PoCeHealthLive.Model;
 using org.ehealth_connector.cda.enums;
@@ -321,7 +314,7 @@ namespace PoCeHealthLive.ViewModel
             String docId = config.getEmrId() + "." + rand;
             metaData.setUniqueId(docId);
             // Set Document title
-            metaData.setTitle(DocumentTitle + docId);
+            metaData.setTitle(DocumentTitle + " " + docId);
             // Set ClassCode
             metaData.setClassCode(new Code("2.16.756.5.30.1.120.20.1", SelectedClassCode,
                     "2.16.756.5.30.1.120.20.1^" + SelectedClassCode));

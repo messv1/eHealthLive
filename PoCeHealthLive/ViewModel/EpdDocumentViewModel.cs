@@ -9,16 +9,15 @@ using org.ehealth_connector.security.xua;
 using org.openhealthtools.ihe.atna.nodeauth;
 using org.openhealthtools.ihe.atna.nodeauth.context;
 using org.openhealthtools.ihe.common.ebxml._3._0.rim;
+using org.openhealthtools.ihe.xds.metadata;
+using org.openhealthtools.ihe.xds.metadata.impl;
 using org.openhealthtools.ihe.xds.response;
 using PoCeHealthLive.Model;
 using PoCeHealthLive.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PoCeHealthLive.ViewModel
 {
@@ -264,32 +263,71 @@ namespace PoCeHealthLive.ViewModel
             initConfig();
 
             // Set Parameters for stored query request
-            qr = conCom.queryDocumentsReferencesOnly(SetSearchAttributes());
+            //qr = conCom.queryDocumentsReferencesOnly(SetSearchAttributes());
+
+            //List<ObjectRefType> docReferences = new List<ObjectRefType>();
+            //qr.getReferences().size();
+
+            //for (int i = 0; i < qr.getReferences().size(); i++)
+            //{
+            //    ObjectRefType objectRefType = (ObjectRefType)qr.getReferences().get(i);
+            //    objectRefType.getId();
+            //    docReferences.Add(objectRefType);
+            //}
 
             //
-            List<ObjectRefType> docReferences = new List<ObjectRefType>();
-            qr.getReferences().size();
+            List<DocumentEntryType> documentEntries = new List<DocumentEntryType>();
 
-            for (int i = 0; i < qr.getReferences().size(); i++)
+            qr = conCom.queryDocuments(SetSearchAttributes());
+
+            for (int i = 0; i < qr.getDocumentEntryResponses().size(); i++)
             {
-                ObjectRefType objectRefType = (ObjectRefType)qr.getReferences().get(i);
-                objectRefType.getId();
-                docReferences.Add(objectRefType);
+                DocumentEntryResponseType documentEntryType = (DocumentEntryResponseType)qr
+                    .getDocumentEntryResponses().get(i);
+                documentEntries.Add((DocumentEntryType)documentEntryType.
+                    getDocumentEntry());
             }
 
-            DisplayDocumentsReferencesResponse(docReferences);
+            DisplayDocumentsReferencesResponse(documentEntries);
         }
-        private void DisplayDocumentsReferencesResponse(List<ObjectRefType> docReferences)
+        private void DisplayDocumentsReferencesResponse(List<DocumentEntryType> documentEntries)
         {            
            RecievedDocumentReferences.Clear();
 
-            for (int i = 0; i < docReferences.Count(); i++)
+            //for (int i = 0; i < docReferences.Count(); i++)
+            //{
+            //    RecievedDocumentReferences.Add(new DocumentReference(docReferences[i].getId()));
+            //    DocumentReference d = new DocumentReference()
+            //}
+
+            //
+            for (int i = 0; i < documentEntries.Count(); i++)
             {
-                RecievedDocumentReferences.Add(new DocumentReference(docReferences[i].getId()));
+                // extract DocumentEntry title
+                string sKeyWordBegin = "value: ";
+                string sKeyWordEnd = ")";
+
+
+                InternationalStringTypeImpl title = (InternationalStringTypeImpl)documentEntries[i].getTitle();
+
+                string sourceString = title.getGroup().getValue(0).ToString();
+                int iKeyWordBegin = sourceString.IndexOf(sKeyWordBegin) + 7;
+                string sTitle = sourceString.Substring(iKeyWordBegin);
+                int iKeyWordEnd = sTitle.IndexOf(sKeyWordEnd);
+                sTitle = sTitle.Substring(0, iKeyWordEnd);
+                System.Console.WriteLine(sTitle);
+
+
+                // DocumentReference umbenennen
+                RecievedDocumentReferences.Add(new DocumentReference(documentEntries[i].getEntryUUID().ToString(),
+                    sTitle, documentEntries[i].getClassCode().getCode(),
+                    documentEntries[i].getTypeCode().getCode(), documentEntries[i].getHealthCareFacilityTypeCode().getCode(),
+                    documentEntries[i].getPracticeSettingCode().getCode(), documentEntries[i].getFormatCode().getCode(),
+                    documentEntries[i].getCreationTime()));
             }
 
             // Set the DocumentReferencesCounter 
-            DocumentReferencesCounter = docReferences.Count().ToString() + " documents found";
+            DocumentReferencesCounter = documentEntries.Count().ToString() + " documents found";
         }
 
         public FindDocumentsQuery SetSearchAttributes()

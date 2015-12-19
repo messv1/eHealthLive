@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PoCeHealthLive.View"
         mc:Ignorable="d"
-        Title="EpdDocumentWindow" Height="460" Width="400">
+        Title="EpdDocumentWindow" Height="460" Width="800">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -99,7 +99,22 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding UUID}"
-                                    Header="Document ID"/>
+                                    Header="ID"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Title}"
+                                    Header="Title"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding ClassCode}"
+                                    Header="Class Code"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding TypeCode}"
+                                    Header="Type Code"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding FacilityTypeCode}"
+                                    Header="FacilityType Code"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding PracticeSettingCode}"
+                                    Header="PracticeSetting Code"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding FormatCode}"
+                                    Header="Format Code"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding CreationTime}"
+                                    Header="Creation Time"/>
+
                 </GridView>
             </ListView.View>
         </ListView>
