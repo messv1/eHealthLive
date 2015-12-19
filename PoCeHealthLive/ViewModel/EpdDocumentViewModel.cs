@@ -31,6 +31,7 @@ namespace PoCeHealthLive.ViewModel
         string selectedFormatCode;
         string documentReferenceCounter;
 
+        Patient patient = new Patient();
         private XUAConfig config = XUAConfig.getInstance();
 
         public SearchDocumentsCommand SearchDocumentsCommand { get; set; }
@@ -115,8 +116,9 @@ namespace PoCeHealthLive.ViewModel
             }
         }
    
-        public EpdDocumentViewModel()
+        public EpdDocumentViewModel(Patient patient)
         {
+            this.patient = patient;
             this.SearchDocumentsCommand = new SearchDocumentsCommand(this);
             // Instantiet item sources
             this.ClassCodes = new ObservableCollection<DocumentAttributes>();
@@ -262,20 +264,6 @@ namespace PoCeHealthLive.ViewModel
 
             initConfig();
 
-            // Set Parameters for stored query request
-            //qr = conCom.queryDocumentsReferencesOnly(SetSearchAttributes());
-
-            //List<ObjectRefType> docReferences = new List<ObjectRefType>();
-            //qr.getReferences().size();
-
-            //for (int i = 0; i < qr.getReferences().size(); i++)
-            //{
-            //    ObjectRefType objectRefType = (ObjectRefType)qr.getReferences().get(i);
-            //    objectRefType.getId();
-            //    docReferences.Add(objectRefType);
-            //}
-
-            //
             List<DocumentEntryType> documentEntries = new List<DocumentEntryType>();
 
             qr = conCom.queryDocuments(SetSearchAttributes());
@@ -294,19 +282,11 @@ namespace PoCeHealthLive.ViewModel
         {            
            RecievedDocumentReferences.Clear();
 
-            //for (int i = 0; i < docReferences.Count(); i++)
-            //{
-            //    RecievedDocumentReferences.Add(new DocumentReference(docReferences[i].getId()));
-            //    DocumentReference d = new DocumentReference()
-            //}
-
-            //
             for (int i = 0; i < documentEntries.Count(); i++)
             {
                 // extract DocumentEntry title
                 string sKeyWordBegin = "value: ";
                 string sKeyWordEnd = ")";
-
 
                 InternationalStringTypeImpl title = (InternationalStringTypeImpl)documentEntries[i].getTitle();
 
@@ -316,7 +296,6 @@ namespace PoCeHealthLive.ViewModel
                 int iKeyWordEnd = sTitle.IndexOf(sKeyWordEnd);
                 sTitle = sTitle.Substring(0, iKeyWordEnd);
                 System.Console.WriteLine(sTitle);
-
 
                 // DocumentReference umbenennen
                 RecievedDocumentReferences.Add(new DocumentReference(documentEntries[i].getEntryUUID().ToString(),
@@ -333,7 +312,8 @@ namespace PoCeHealthLive.ViewModel
         public FindDocumentsQuery SetSearchAttributes()
         {
             // Identificator patientId = new Identificator("2.16.756.5.30.1.120.10.1", "214211038"); Messerli Vinzenz
-            Identificator patientId = new Identificator("2.16.756.5.30.1.120.10.1", "102836133"); // ersetzen
+            //Identificator patientId = new Identificator("2.16.756.5.30.1.120.10.1", "102836133"); // ersetzen
+            java.util.List ids = patient.getIds();
             AdministrativeGender sex = AdministrativeGender.MALE;
 
             // Set classCode common DTC06: Episode Zusamenfassungen
@@ -397,7 +377,7 @@ namespace PoCeHealthLive.ViewModel
             }
             else { formatCodes = null; }
 
-                FindDocumentsQuery fdq = new FindDocumentsQuery(patientId, classCodes, null, practiceSettingCodes,
+                FindDocumentsQuery fdq = new FindDocumentsQuery((Identificator)patient.getIds().get(0), classCodes, null, practiceSettingCodes,
                 healthCareFacilityCodes, confidentialityCodes, formatCodes, null, AvailabilityStatus.APPROVED);
             //FindDocumentsQuery fdq = new FindDocumentsQuery(patientId, null, null, null,
             //    null, null, null, null, AvailabilityStatus.APPROVED);

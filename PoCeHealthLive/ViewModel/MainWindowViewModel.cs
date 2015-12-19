@@ -77,7 +77,7 @@ namespace PoCeHealthLive.ViewModel
         {
             PatientInfo = new ObservableCollection<DemographicData>();
             childViewModelPublishDocument = new PublishDocumentViewModel(patient);
-            childViewModelEpdDocument = new EpdDocumentViewModel();
+            childViewModelEpdDocument = new EpdDocumentViewModel(patient);
 
             this.SearchPatientCommand = new SearchPatientCommand(this);
             this.ConnectToInfomedCommand = new ConnectToInfomedCommand(this);

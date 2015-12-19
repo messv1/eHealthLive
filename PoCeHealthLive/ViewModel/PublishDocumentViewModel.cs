@@ -295,15 +295,8 @@ namespace PoCeHealthLive.ViewModel
 
         private void completeMetadata(DocumentMetadata metaData)
         {
-            //Patient patient = new Patient();
-            //patient.addName(new Name("Vinzenz", "Messerli"));
-            //java.util.Date birthdate = new java.util.Date();
-            //patient.setBirthday(birthdate);
             AdministrativeGender sex = AdministrativeGender.MALE;
             patient.setAdministrativeGender(sex);
-            //patient.addId(new Identificator("2.16.756.5.30.1.120.10.1", "102836133"));
-
-            //patient.addId(new Identificator("2.16.756.5.30.1.120.10.1", "214211038"));
             metaData.setPatient(patient);
             metaData.setCodedLanguage(LanguageCode.DEUTSCH_CODE);
 
@@ -340,9 +333,7 @@ namespace PoCeHealthLive.ViewModel
             metaData.setDocSourceActorOrganizationId(config.getEmrId());
             java.util.List ids = patient.getIds();
             metaData.setSourcePatientId((Identificator)ids.get(0));
-            //metaData.setSourcePatientId((Identificator)ids.get(1));
-            //metaData.setSourcePatientId(new Identificator("2.16.756.5.30.1.120.10.1", "102836133"));
-
+ 
             SourcePatientInfoType sourceInfo = Hl7v2Factory.eINSTANCE.createSourcePatientInfoType();
             sourceInfo.setPatientSex(patient.getAdministrativeGenderCode().toString());
             XPN xcn = Hl7v2Factory.eINSTANCE.createXPN();
@@ -351,7 +342,6 @@ namespace PoCeHealthLive.ViewModel
             sourceInfo.getPatientName().add(xcn);
             sourceInfo.getPatientIdentifier()
             .add(XdsUtil.convertEhcIdentificator((Identificator)patient.getIds().get(0)));
-            //.add(XdsUtil.convertEhcIdentificator((Identificator)patient.getIds().get(1)));
             metaData.getMdhtDocumentEntryType().setSourcePatientInfo(sourceInfo);
             metaData.getMdhtDocumentEntryType().getAuthors().add(this.generateAuthor());
         }
