@@ -1,4 +1,5 @@
 ﻿using java.net;
+using org.apache.commons.io;
 using org.ehealth_connector.cda.enums;
 using org.ehealth_connector.common;
 using org.ehealth_connector.communication;
@@ -9,6 +10,7 @@ using org.ehealth_connector.security.xua;
 using org.openhealthtools.ihe.atna.nodeauth;
 using org.openhealthtools.ihe.atna.nodeauth.context;
 using org.openhealthtools.ihe.common.ebxml._3._0.rim;
+using org.openhealthtools.ihe.xds.document;
 using org.openhealthtools.ihe.xds.metadata;
 using org.openhealthtools.ihe.xds.metadata.impl;
 using org.openhealthtools.ihe.xds.response;
@@ -17,6 +19,7 @@ using PoCeHealthLive.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 namespace PoCeHealthLive.ViewModel
@@ -31,22 +34,36 @@ namespace PoCeHealthLive.ViewModel
         string selectedFormatCode;
         string documentReferenceCounter;
 
+        DocumentEntryAttributes selectedDocumentEntryType;
+
         Patient patient = new Patient();
         private XUAConfig config = XUAConfig.getInstance();
 
         public SearchDocumentsCommand SearchDocumentsCommand { get; set; }
+        public OpenDocumentCommand OpenDocumentCommand { get; set; }
         public ObservableCollection<DocumentAttributes> ClassCodes { get; set; }
         public ObservableCollection<DocumentAttributes> HealthCareFacilityCodes { get; set; }
         public ObservableCollection<DocumentAttributes> ConfidentialityCodes { get; set; }
         public ObservableCollection<DocumentAttributes> PracticeSettingCodes { get; set; }
         public ObservableCollection<DocumentAttributes> FormatCodes { get; set; }
-        public ObservableCollection<DocumentReference> RecievedDocumentReferences { get; set; }
+        public ObservableCollection<DocumentEntryAttributes> RecievedDocumentEntries { get; set; }
+        //public ObservableCollection<DocumentEntryType> RecievedDocumentEntries { get; set; }
 
         public string  DocumentReferencesCounter {
             get { return this.documentReferenceCounter; }
             set
             {
                 documentReferenceCounter = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DocumentEntryAttributes SelectedDocumentEntryType
+        {
+            get { return this.selectedDocumentEntryType; }
+            set
+            {
+                this.selectedDocumentEntryType = value;
                 OnPropertyChanged();
             }
         }
@@ -120,13 +137,14 @@ namespace PoCeHealthLive.ViewModel
         {
             this.patient = patient;
             this.SearchDocumentsCommand = new SearchDocumentsCommand(this);
+            this.OpenDocumentCommand = new OpenDocumentCommand(this);
             // Instantiet item sources
             this.ClassCodes = new ObservableCollection<DocumentAttributes>();
             this.HealthCareFacilityCodes = new ObservableCollection<DocumentAttributes>();
             this.ConfidentialityCodes = new ObservableCollection<DocumentAttributes>();
             this.PracticeSettingCodes = new ObservableCollection<DocumentAttributes>();
             this.FormatCodes = new ObservableCollection<DocumentAttributes>();
-            this.RecievedDocumentReferences = new ObservableCollection<DocumentReference>();
+            this.RecievedDocumentEntries = new ObservableCollection<DocumentEntryAttributes>();
 
             // Set Document attributes
             this.SetDocumentAttributes();
@@ -276,20 +294,18 @@ namespace PoCeHealthLive.ViewModel
                     getDocumentEntry());
             }
 
-            DisplayDocumentsReferencesResponse(documentEntries);
+            DisplayDocumentsEntryResponse(documentEntries);
         }
-        private void DisplayDocumentsReferencesResponse(List<DocumentEntryType> documentEntries)
+        private void DisplayDocumentsEntryResponse(List<DocumentEntryType> documentEntries)
         {            
-           RecievedDocumentReferences.Clear();
+           RecievedDocumentEntries.Clear();
 
             for (int i = 0; i < documentEntries.Count(); i++)
             {
                 // extract DocumentEntry title
                 string sKeyWordBegin = "value: ";
                 string sKeyWordEnd = ")";
-
                 InternationalStringTypeImpl title = (InternationalStringTypeImpl)documentEntries[i].getTitle();
-
                 string sourceString = title.getGroup().getValue(0).ToString();
                 int iKeyWordBegin = sourceString.IndexOf(sKeyWordBegin) + 7;
                 string sTitle = sourceString.Substring(iKeyWordBegin);
@@ -297,12 +313,13 @@ namespace PoCeHealthLive.ViewModel
                 sTitle = sTitle.Substring(0, iKeyWordEnd);
                 System.Console.WriteLine(sTitle);
 
+
                 // DocumentReference umbenennen
-                RecievedDocumentReferences.Add(new DocumentReference(documentEntries[i].getEntryUUID().ToString(),
+                RecievedDocumentEntries.Add(new DocumentEntryAttributes(documentEntries[i].getEntryUUID().ToString(),
                     sTitle, documentEntries[i].getClassCode().getCode(),
                     documentEntries[i].getTypeCode().getCode(), documentEntries[i].getHealthCareFacilityTypeCode().getCode(),
                     documentEntries[i].getPracticeSettingCode().getCode(), documentEntries[i].getFormatCode().getCode(),
-                    documentEntries[i].getCreationTime()));
+                    documentEntries[i].getCreationTime(), documentEntries[i]));
             }
 
             // Set the DocumentReferencesCounter 
@@ -382,6 +399,66 @@ namespace PoCeHealthLive.ViewModel
             //FindDocumentsQuery fdq = new FindDocumentsQuery(patientId, null, null, null,
             //    null, null, null, null, AvailabilityStatus.APPROVED);
             return fdq;
+        }
+
+        /// <summary>
+        /// Open a document from DocumentRequestResponse
+        /// </summary>
+        public void OpenDocument()
+        {
+            Debug.WriteLine("test");
+
+            ConvenienceCommunication conCom = getInfomedCommunication();
+            DocumentEntryType docEntry = SelectedDocumentEntryType.DocumentEntryType;
+
+            DocumentRequest documentRequest = new DocumentRequest(docEntry.getRepositoryUniqueId(),
+                        conCom.getAffinityDomain().getRepositoryDestination().getUri(), docEntry.getUniqueId());
+            XDSRetrieveResponseType rrt = conCom.retrieveDocument(documentRequest);
+
+            try
+            {
+                storeDocument(docEntry, rrt, "dummy.bin");
+            }
+            catch (URISyntaxException e)
+            {
+                e.printStackTrace();
+            }
+            catch (java.io.IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        private bool storeDocument(DocumentEntryType docEntry, XDSRetrieveResponseType rrt, String filename)
+        {
+
+            if (rrt.getAttachments() == null)
+            {
+            }
+
+            else if (rrt.getAttachments().size() > 0)
+            {
+
+                if (rrt.getErrorList() != null)
+                {
+                    System.Console.WriteLine("\nErrors: " + rrt.getErrorList().getHighestSeverity().getName() + ".");
+                }
+
+                //System.Console.WriteLine("\nRetrieve sucessful. Retrieved: " + rrt.getAttachments().size() + " documents.");
+                XDSDocument document = (XDSDocument)rrt.getAttachments().get(0);
+                java.io.InputStream docIS = document.getStream();
+                java.io.File targetFile = new java.io.File("Retrieved Documents/" + filename);
+                FileUtils.copyInputStreamToFile(docIS, targetFile);
+
+                System.Console.WriteLine("\nDocument was stored to: " + targetFile.getCanonicalPath() + "\n");
+            }
+
+            else
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void initConfig()

@@ -29,15 +29,6 @@ namespace PoCeHealthLive.ViewModel
         Patient patient = new Patient();
         XDSResponseType response;
 
-        public BrowseDocumentsCommand BrowseDocumentsCommand { get; set; }
-        public PublishCommand PublishCommand { get; set; }
-        public ObservableCollection<DocumentAttributes> ClassCodes { get; set; }
-        public ObservableCollection<DocumentAttributes> TypeCodes { get; set; }
-        public ObservableCollection<DocumentAttributes> HealthCareFacilityCodes { get; set; }
-        public ObservableCollection<DocumentAttributes> ConfidentialityCodes { get; set; }
-        public ObservableCollection<DocumentAttributes> PracticeSettingCodes { get; set; }
-        public ObservableCollection<DocumentAttributes> FormatCodes { get; set; }
-
         // Property backing fields.
         string selectedClassCode;
         string selectedTypeCode;
@@ -46,6 +37,14 @@ namespace PoCeHealthLive.ViewModel
         string selectedPracticeSettingCode;
         string selectedFormatCode;
 
+        public BrowseDocumentsCommand BrowseDocumentsCommand { get; set; }
+        public PublishCommand PublishCommand { get; set; }
+        public ObservableCollection<DocumentAttributes> ClassCodes { get; set; }
+        public ObservableCollection<DocumentAttributes> TypeCodes { get; set; }
+        public ObservableCollection<DocumentAttributes> HealthCareFacilityCodes { get; set; }
+        public ObservableCollection<DocumentAttributes> ConfidentialityCodes { get; set; }
+        public ObservableCollection<DocumentAttributes> PracticeSettingCodes { get; set; }
+        public ObservableCollection<DocumentAttributes> FormatCodes { get; set; }
 
         // Declare a FilePath property of type string:
         public string FilePath
@@ -210,11 +209,11 @@ namespace PoCeHealthLive.ViewModel
             // Show status of publication in a Message Box
             if (status.Equals("Success") && string.IsNullOrEmpty(status) == false)
             {
-                MessageBoxResult result = MessageBox.Show("Document was successfully published", "Confirmation");
+                MessageBoxResult result = MessageBox.Show("Document was published successfully", "Confirmation");
             }
             else
             {
-                MessageBoxResult result = MessageBox.Show("Document was not successfully published", "Confirmation");
+                MessageBoxResult result = MessageBox.Show("Document was not published successfully", "Error occured");
             }
 
         }
@@ -426,8 +425,6 @@ namespace PoCeHealthLive.ViewModel
                 NodeAuthModuleContext.getContext().getSecurityDomainManager().registerSecurityDomain(sd);
                 NodeAuthModuleContext.getContext().getSecurityDomainManager()
                         .registerURItoSecurityDomain(new java.net.URI("https://www-test.infomed-vs.ch:443"), "infomed");
-
-
                 ConvenienceSecurity.initSecurity();
             }
             catch (SecurityDomainException e1)

@@ -7,12 +7,12 @@ using System.Windows.Input;
 
 namespace PoCeHealthLive.ViewModel.Commands
 {
-    class SearchDocumentsCommand : ICommand
+    class OpenDocumentCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
         public EpdDocumentViewModel ViewModel { get; set; }
 
-        public SearchDocumentsCommand(EpdDocumentViewModel viewModel)
+        public OpenDocumentCommand(EpdDocumentViewModel viewModel)
         {
             this.ViewModel = viewModel;
         }
@@ -24,7 +24,7 @@ namespace PoCeHealthLive.ViewModel.Commands
 
         public void Execute(object parameter)
         {
-            this.ViewModel.SearchDocumentsInRegistry();
+            this.ViewModel.OpenDocument();
         }
     }
 }

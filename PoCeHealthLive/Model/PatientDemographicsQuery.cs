@@ -101,11 +101,9 @@ namespace PoCeHealthLive.Model
             return affinityDomain;
         }
 
-        //public bool patientDemographicsQueryID(TriaMedPatient demographicData, Patient patient)
         public Patient patientDemographicsQueryID(Patient patient)
         {     
             AffinityDomain affinityDomain = getInfomedAffinityDomian();
-
             MasterPatientIndexQuery mpiQuery = new MasterPatientIndexQuery(affinityDomain.getPdqDestination());
             Name name = new Name(patient.getName().getGivenNames(), patient.getName().getFamilyName());
 

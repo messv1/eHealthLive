@@ -111,12 +111,13 @@ namespace PoCeHealthLive.ViewModel
 
         public void ConnectToInfomed()
         {
+            // Create instance of class PatientDemographicsQuery
             PatientDemographicsQuery request = new PatientDemographicsQuery();
             patient = request.patientDemographicsQueryID(patient);
             java.util.List ids;
 
             ids = patient.getIds();
-            // Set Infomed ID of first patien
+            // Set Infomed ID of first patient
             //demographicData.IpID = ((Identificator)ids.get(0)).getExtension();
             // get Infomed Folder ID
             demographicData.FolderID = ((Identificator)ids.get(0)).getExtension();
@@ -150,7 +151,7 @@ namespace PoCeHealthLive.ViewModel
             demographicData.Dob = null;
             demographicData.FolderID = null;
             demographicData.IpID = null;
-            patient = null;
+            //patient = null;
             PatientInfo.Clear();
         }
 

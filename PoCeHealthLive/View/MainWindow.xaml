@@ -49,9 +49,9 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Dob}"
                                     Header="DOB"
                                     Width="70"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding IpID}"
+                    <!--<GridViewColumn DisplayMemberBinding="{Binding IpID}"
                                     Header="ipid"
-                                    Width="70"/>
+                                    Width="70"/>-->
                     <GridViewColumn DisplayMemberBinding="{Binding FolderID}"
                                     Header="Folder ID"
                                     Width="70"/>

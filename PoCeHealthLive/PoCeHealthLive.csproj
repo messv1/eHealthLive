@@ -140,9 +140,10 @@
     </ApplicationDefinition>
     <Compile Include="Model\DemographicData.cs" />
     <Compile Include="Model\DocumentAttributes.cs" />
-    <Compile Include="Model\DocumentReference.cs" />
+    <Compile Include="Model\DocumentEntryAttributes.cs" />
     <Compile Include="ViewModel\Commands\BrowseDocumentsCommand.cs" />
     <Compile Include="ViewModel\Commands\ClearDemographicDataCommand.cs" />
+    <Compile Include="ViewModel\Commands\OpenDocumentCommand.cs" />
     <Compile Include="ViewModel\Commands\SearchDocumentsCommand.cs" />
     <Compile Include="ViewModel\Commands\ShowEpdCommand.cs" />
     <Compile Include="ViewModel\Commands\PublishCommand.cs" />
@@ -224,6 +225,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
     <EntityDeploy Include="PraxiCenter.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -288,7 +290,9 @@
       <LastGenOutput>PraxiCenter.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Retrieved Documents\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

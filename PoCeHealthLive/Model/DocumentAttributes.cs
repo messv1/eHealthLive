@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PoCeHealthLive.Model
 {
+    //rename
     class DocumentAttributes
     {
         public string Name { get; set; }
