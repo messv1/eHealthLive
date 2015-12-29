@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PoCeHealthLive.ViewModel
 {
@@ -41,11 +43,11 @@ namespace PoCeHealthLive.ViewModel
 
         public SearchDocumentsCommand SearchDocumentsCommand { get; set; }
         public OpenDocumentCommand OpenDocumentCommand { get; set; }
-        public ObservableCollection<DocumentAttributes> ClassCodes { get; set; }
-        public ObservableCollection<DocumentAttributes> HealthCareFacilityCodes { get; set; }
-        public ObservableCollection<DocumentAttributes> ConfidentialityCodes { get; set; }
-        public ObservableCollection<DocumentAttributes> PracticeSettingCodes { get; set; }
-        public ObservableCollection<DocumentAttributes> FormatCodes { get; set; }
+        public ObservableCollection<CustomCode> ClassCodes { get; set; }
+        public ObservableCollection<CustomCode> HealthCareFacilityCodes { get; set; }
+        public ObservableCollection<CustomCode> ConfidentialityCodes { get; set; }
+        public ObservableCollection<CustomCode> PracticeSettingCodes { get; set; }
+        public ObservableCollection<CustomCode> FormatCodes { get; set; }
         public ObservableCollection<DocumentEntryAttributes> RecievedDocumentEntries { get; set; }
         //public ObservableCollection<DocumentEntryType> RecievedDocumentEntries { get; set; }
 
@@ -139,11 +141,11 @@ namespace PoCeHealthLive.ViewModel
             this.SearchDocumentsCommand = new SearchDocumentsCommand(this);
             this.OpenDocumentCommand = new OpenDocumentCommand(this);
             // Instantiet item sources
-            this.ClassCodes = new ObservableCollection<DocumentAttributes>();
-            this.HealthCareFacilityCodes = new ObservableCollection<DocumentAttributes>();
-            this.ConfidentialityCodes = new ObservableCollection<DocumentAttributes>();
-            this.PracticeSettingCodes = new ObservableCollection<DocumentAttributes>();
-            this.FormatCodes = new ObservableCollection<DocumentAttributes>();
+            this.ClassCodes = new ObservableCollection<CustomCode>();
+            this.HealthCareFacilityCodes = new ObservableCollection<CustomCode>();
+            this.ConfidentialityCodes = new ObservableCollection<CustomCode>();
+            this.PracticeSettingCodes = new ObservableCollection<CustomCode>();
+            this.FormatCodes = new ObservableCollection<CustomCode>();
             this.RecievedDocumentEntries = new ObservableCollection<DocumentEntryAttributes>();
 
             // Set Document attributes
@@ -154,125 +156,125 @@ namespace PoCeHealthLive.ViewModel
         public void SetDocumentAttributes()
         {
             // Set Document Class Codes
-            this.ClassCodes.Add(new DocumentAttributes("Alle", null));
-            this.ClassCodes.Add(new DocumentAttributes("Konsultation Notizen", "DTC01"));
-            this.ClassCodes.Add(new DocumentAttributes("Verlauf Notizen", "DTC02"));
-            this.ClassCodes.Add(new DocumentAttributes("Behandlungen Notizen", "DTC03"));
-            this.ClassCodes.Add(new DocumentAttributes("Untersuchung Verordnung", "DTC04"));
-            this.ClassCodes.Add(new DocumentAttributes("Behandlung Verordnungen", "DTC05"));
-            this.ClassCodes.Add(new DocumentAttributes("Episoden Zusamenfassung", "DTC06"));
-            this.ClassCodes.Add(new DocumentAttributes("Verlaufsberichte", "DTC07"));
-            this.ClassCodes.Add(new DocumentAttributes("Untersuchungs Resultate", "DTC08"));
-            this.ClassCodes.Add(new DocumentAttributes("Benachrichtigungen", "DTC09"));
-            this.ClassCodes.Add(new DocumentAttributes("Krankengeschichte Zusammenfassungen", "DTC10"));
-            this.ClassCodes.Add(new DocumentAttributes("Aktuelle Zustandszusammenfassungen", "DTC11"));
-            this.ClassCodes.Add(new DocumentAttributes("Behandlungsplan", "DTC12"));
-            this.ClassCodes.Add(new DocumentAttributes("Warnungen", "DTC13"));
-            this.ClassCodes.Add(new DocumentAttributes("Andere", "DTC90"));
+            this.ClassCodes.Add(new CustomCode("Alle", null));
+            this.ClassCodes.Add(new CustomCode("Konsultation Notizen", "DTC01"));
+            this.ClassCodes.Add(new CustomCode("Verlauf Notizen", "DTC02"));
+            this.ClassCodes.Add(new CustomCode("Behandlungen Notizen", "DTC03"));
+            this.ClassCodes.Add(new CustomCode("Untersuchung Verordnung", "DTC04"));
+            this.ClassCodes.Add(new CustomCode("Behandlung Verordnungen", "DTC05"));
+            this.ClassCodes.Add(new CustomCode("Episoden Zusamenfassung", "DTC06"));
+            this.ClassCodes.Add(new CustomCode("Verlaufsberichte", "DTC07"));
+            this.ClassCodes.Add(new CustomCode("Untersuchungs Resultate", "DTC08"));
+            this.ClassCodes.Add(new CustomCode("Benachrichtigungen", "DTC09"));
+            this.ClassCodes.Add(new CustomCode("Krankengeschichte Zusammenfassungen", "DTC10"));
+            this.ClassCodes.Add(new CustomCode("Aktuelle Zustandszusammenfassungen", "DTC11"));
+            this.ClassCodes.Add(new CustomCode("Behandlungsplan", "DTC12"));
+            this.ClassCodes.Add(new CustomCode("Warnungen", "DTC13"));
+            this.ClassCodes.Add(new CustomCode("Andere", "DTC90"));
 
             // Set Document Healthcarefacility Codes
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Alle", null));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Institut für medizinische Diagnostik", "190001"));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Notfalleinrichtung/Rettungswesen", "190002"));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Gesundheitsbehörde", "190003"));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Spitex", "190004"));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Spital", "190005"));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Psychiatrie Spital", "190006"));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Gesundheitseinrichtung in der Haftanstalt", "190007"));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Organisation für stationäre Krankenpflege", "190008"));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Apotheken", "190009"));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Hausarztpraxis", "190010"));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Facharztpraxis", "190011"));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Organisation für stationäre Rehabilitation", "190012"));
-            this.HealthCareFacilityCodes.Add(new DocumentAttributes("Andere", "190999"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Alle", null));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Institut für medizinische Diagnostik", "190001"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Notfalleinrichtung/Rettungswesen", "190002"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Gesundheitsbehörde", "190003"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Spitex", "190004"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Spital", "190005"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Psychiatrie Spital", "190006"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Gesundheitseinrichtung in der Haftanstalt", "190007"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Organisation für stationäre Krankenpflege", "190008"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Apotheken", "190009"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Hausarztpraxis", "190010"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Facharztpraxis", "190011"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Organisation für stationäre Rehabilitation", "190012"));
+            this.HealthCareFacilityCodes.Add(new CustomCode("Andere", "190999"));
 
             // Set Document Confidentiality Codes
-            this.ConfidentialityCodes.Add(new DocumentAttributes("Alle", null));
-            this.ConfidentialityCodes.Add(new DocumentAttributes("Administrative", "A"));
-            this.ConfidentialityCodes.Add(new DocumentAttributes("Medical", "N"));
-            this.ConfidentialityCodes.Add(new DocumentAttributes("Secret", "V"));
-            this.ConfidentialityCodes.Add(new DocumentAttributes("Stigmatizing", "R"));
-            this.ConfidentialityCodes.Add(new DocumentAttributes("Utilities", "U"));
+            this.ConfidentialityCodes.Add(new CustomCode("Alle", null));
+            this.ConfidentialityCodes.Add(new CustomCode("Administrative", "A"));
+            this.ConfidentialityCodes.Add(new CustomCode("Medical", "N"));
+            this.ConfidentialityCodes.Add(new CustomCode("Secret", "V"));
+            this.ConfidentialityCodes.Add(new CustomCode("Stigmatizing", "R"));
+            this.ConfidentialityCodes.Add(new CustomCode("Utilities", "U"));
 
             // Set Document PracticeSetting Codes
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Alle", null));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Allergologie und klinische Immunologie", "260001"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Allgemeinmedizin", "260002"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Anästhesiologie", "260003"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Angiologie", "260004"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Pharmakologie", "260005"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Arbeitsmedizin", "260006"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Augenoptik", "260007"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Chiropraktik", "260008"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Chirurgie", "260009"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Dermatologie/Venerologie", "260010"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Endokrinologie/Diabetologie", "260011"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Ergotherapie", "260012"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Ernährungsberatung", "260013"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Geriatrie", "260014"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Gastroenterologie", "260015"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Gynäkologie/Geburtshilfe", "260016"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Handchirurgie", "260017"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Hebamme", "260018"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Herz- und thorakale Gefässchirurgie", "260019"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Infektiologie", "260020"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Innere Medizin", "260021"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Intensivmedizin", "260022"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Kardiologie", "260023"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Kinder-/Jugendmedizin", "260024"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Kinder/Jugend-psychiatrie/-psychotherapie", "260025"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Kinderchirurgie", "260026"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Klinische Psychologie", "260027"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Kur-/Präventions-Einrichtung", "260028"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Labordiagnostik", "260029"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Logopädie", "260030"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Medizinische Genetik", "260031"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Medizinische Onkologie", "260032"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Mund-, Kiefer- und Gesichtschirurgie", "260033"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Nephrologie", "260034"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Neurochirurgie", "260035"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Neurologie", "260036"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Nuklearmedizin", "260037"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Ophthalmologie", "260038"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Orthopädische Chirurgie und Traumatologie des Bewegungsapparates", "260039"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Osteopathie", "260040"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Oto-Rhino-Laryngologie", "260041"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Palliativmedizin", "260042"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Pathologie", "260043"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Pflege ambulant (zu Hause)", "260044"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Pflege stationär", "260045"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Physikalische Medizin", "260046"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Physiotherapie", "260047"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Plastische, Rekonstruktive und Ästhetische Chirurgie", "260048"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Pneumologie", "260049"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Podologie", "260050"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Prävention", "260051"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Psychiatrie und Psychotherapie", "260052"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Psychosomatik", "260053"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Radiologie", "260054"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Radio-Onkologie/Strahlentherapie", "260055"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Rechtsmedizin", "260056"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Rehabilitation", "260057"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Rettungsmedizin", "260058"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Rheumatologie", "260059"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Sozialdienst", "260060"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Thoraxchirurgie", "260061"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Transfusionsmedizin", "260062"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Tropen-/Reisemedizin", "260063"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Unfallchirurgie", "260064"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Urologie", "260065"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Zahnheilkunde", "260066"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Zahn-, Mund- und Kieferheilkunde", "260067"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Hämatologie", "260068"));
-            this.PracticeSettingCodes.Add(new DocumentAttributes("Andere medzinische Fachrichtung", "260099"));
+            this.PracticeSettingCodes.Add(new CustomCode("Alle", null));
+            this.PracticeSettingCodes.Add(new CustomCode("Allergologie und klinische Immunologie", "260001"));
+            this.PracticeSettingCodes.Add(new CustomCode("Allgemeinmedizin", "260002"));
+            this.PracticeSettingCodes.Add(new CustomCode("Anästhesiologie", "260003"));
+            this.PracticeSettingCodes.Add(new CustomCode("Angiologie", "260004"));
+            this.PracticeSettingCodes.Add(new CustomCode("Pharmakologie", "260005"));
+            this.PracticeSettingCodes.Add(new CustomCode("Arbeitsmedizin", "260006"));
+            this.PracticeSettingCodes.Add(new CustomCode("Augenoptik", "260007"));
+            this.PracticeSettingCodes.Add(new CustomCode("Chiropraktik", "260008"));
+            this.PracticeSettingCodes.Add(new CustomCode("Chirurgie", "260009"));
+            this.PracticeSettingCodes.Add(new CustomCode("Dermatologie/Venerologie", "260010"));
+            this.PracticeSettingCodes.Add(new CustomCode("Endokrinologie/Diabetologie", "260011"));
+            this.PracticeSettingCodes.Add(new CustomCode("Ergotherapie", "260012"));
+            this.PracticeSettingCodes.Add(new CustomCode("Ernährungsberatung", "260013"));
+            this.PracticeSettingCodes.Add(new CustomCode("Geriatrie", "260014"));
+            this.PracticeSettingCodes.Add(new CustomCode("Gastroenterologie", "260015"));
+            this.PracticeSettingCodes.Add(new CustomCode("Gynäkologie/Geburtshilfe", "260016"));
+            this.PracticeSettingCodes.Add(new CustomCode("Handchirurgie", "260017"));
+            this.PracticeSettingCodes.Add(new CustomCode("Hebamme", "260018"));
+            this.PracticeSettingCodes.Add(new CustomCode("Herz- und thorakale Gefässchirurgie", "260019"));
+            this.PracticeSettingCodes.Add(new CustomCode("Infektiologie", "260020"));
+            this.PracticeSettingCodes.Add(new CustomCode("Innere Medizin", "260021"));
+            this.PracticeSettingCodes.Add(new CustomCode("Intensivmedizin", "260022"));
+            this.PracticeSettingCodes.Add(new CustomCode("Kardiologie", "260023"));
+            this.PracticeSettingCodes.Add(new CustomCode("Kinder-/Jugendmedizin", "260024"));
+            this.PracticeSettingCodes.Add(new CustomCode("Kinder/Jugend-psychiatrie/-psychotherapie", "260025"));
+            this.PracticeSettingCodes.Add(new CustomCode("Kinderchirurgie", "260026"));
+            this.PracticeSettingCodes.Add(new CustomCode("Klinische Psychologie", "260027"));
+            this.PracticeSettingCodes.Add(new CustomCode("Kur-/Präventions-Einrichtung", "260028"));
+            this.PracticeSettingCodes.Add(new CustomCode("Labordiagnostik", "260029"));
+            this.PracticeSettingCodes.Add(new CustomCode("Logopädie", "260030"));
+            this.PracticeSettingCodes.Add(new CustomCode("Medizinische Genetik", "260031"));
+            this.PracticeSettingCodes.Add(new CustomCode("Medizinische Onkologie", "260032"));
+            this.PracticeSettingCodes.Add(new CustomCode("Mund-, Kiefer- und Gesichtschirurgie", "260033"));
+            this.PracticeSettingCodes.Add(new CustomCode("Nephrologie", "260034"));
+            this.PracticeSettingCodes.Add(new CustomCode("Neurochirurgie", "260035"));
+            this.PracticeSettingCodes.Add(new CustomCode("Neurologie", "260036"));
+            this.PracticeSettingCodes.Add(new CustomCode("Nuklearmedizin", "260037"));
+            this.PracticeSettingCodes.Add(new CustomCode("Ophthalmologie", "260038"));
+            this.PracticeSettingCodes.Add(new CustomCode("Orthopädische Chirurgie und Traumatologie des Bewegungsapparates", "260039"));
+            this.PracticeSettingCodes.Add(new CustomCode("Osteopathie", "260040"));
+            this.PracticeSettingCodes.Add(new CustomCode("Oto-Rhino-Laryngologie", "260041"));
+            this.PracticeSettingCodes.Add(new CustomCode("Palliativmedizin", "260042"));
+            this.PracticeSettingCodes.Add(new CustomCode("Pathologie", "260043"));
+            this.PracticeSettingCodes.Add(new CustomCode("Pflege ambulant (zu Hause)", "260044"));
+            this.PracticeSettingCodes.Add(new CustomCode("Pflege stationär", "260045"));
+            this.PracticeSettingCodes.Add(new CustomCode("Physikalische Medizin", "260046"));
+            this.PracticeSettingCodes.Add(new CustomCode("Physiotherapie", "260047"));
+            this.PracticeSettingCodes.Add(new CustomCode("Plastische, Rekonstruktive und Ästhetische Chirurgie", "260048"));
+            this.PracticeSettingCodes.Add(new CustomCode("Pneumologie", "260049"));
+            this.PracticeSettingCodes.Add(new CustomCode("Podologie", "260050"));
+            this.PracticeSettingCodes.Add(new CustomCode("Prävention", "260051"));
+            this.PracticeSettingCodes.Add(new CustomCode("Psychiatrie und Psychotherapie", "260052"));
+            this.PracticeSettingCodes.Add(new CustomCode("Psychosomatik", "260053"));
+            this.PracticeSettingCodes.Add(new CustomCode("Radiologie", "260054"));
+            this.PracticeSettingCodes.Add(new CustomCode("Radio-Onkologie/Strahlentherapie", "260055"));
+            this.PracticeSettingCodes.Add(new CustomCode("Rechtsmedizin", "260056"));
+            this.PracticeSettingCodes.Add(new CustomCode("Rehabilitation", "260057"));
+            this.PracticeSettingCodes.Add(new CustomCode("Rettungsmedizin", "260058"));
+            this.PracticeSettingCodes.Add(new CustomCode("Rheumatologie", "260059"));
+            this.PracticeSettingCodes.Add(new CustomCode("Sozialdienst", "260060"));
+            this.PracticeSettingCodes.Add(new CustomCode("Thoraxchirurgie", "260061"));
+            this.PracticeSettingCodes.Add(new CustomCode("Transfusionsmedizin", "260062"));
+            this.PracticeSettingCodes.Add(new CustomCode("Tropen-/Reisemedizin", "260063"));
+            this.PracticeSettingCodes.Add(new CustomCode("Unfallchirurgie", "260064"));
+            this.PracticeSettingCodes.Add(new CustomCode("Urologie", "260065"));
+            this.PracticeSettingCodes.Add(new CustomCode("Zahnheilkunde", "260066"));
+            this.PracticeSettingCodes.Add(new CustomCode("Zahn-, Mund- und Kieferheilkunde", "260067"));
+            this.PracticeSettingCodes.Add(new CustomCode("Hämatologie", "260068"));
+            this.PracticeSettingCodes.Add(new CustomCode("Andere medzinische Fachrichtung", "260099"));
 
             // Set Document Format Codes
-            this.FormatCodes.Add(new DocumentAttributes("Alle", null));
-            this.FormatCodes.Add(new DocumentAttributes("application/pdf", "urn:ihe:iti:xds-sd:pdf:2008"));
-            this.FormatCodes.Add(new DocumentAttributes("text/plain", "urn:ihe:iti:xds-sd:text:2008"));
-            this.FormatCodes.Add(new DocumentAttributes("mage/jpeg", "urn:ihe:iti-fr:xds-sd:jpeg:2010"));
-            this.FormatCodes.Add(new DocumentAttributes("image/tiff", "urn:ihe:iti-fr:xds-sd:tiff:2010"));
-            this.FormatCodes.Add(new DocumentAttributes("text/xml", "urn:ihe:pcc:xds-ms:2007"));
+            this.FormatCodes.Add(new CustomCode("Alle", null));
+            this.FormatCodes.Add(new CustomCode("application/pdf", "urn:ihe:iti:xds-sd:pdf:2008"));
+            this.FormatCodes.Add(new CustomCode("text/plain", "urn:ihe:iti:xds-sd:text:2008"));
+            this.FormatCodes.Add(new CustomCode("mage/jpeg", "urn:ihe:iti-fr:xds-sd:jpeg:2010"));
+            this.FormatCodes.Add(new CustomCode("image/tiff", "urn:ihe:iti-fr:xds-sd:tiff:2010"));
+            this.FormatCodes.Add(new CustomCode("text/xml", "urn:ihe:pcc:xds-ms:2007"));
         }
 
         public void SearchDocumentsInRegistry()
@@ -406,8 +408,6 @@ namespace PoCeHealthLive.ViewModel
         /// </summary>
         public void OpenDocument()
         {
-            Debug.WriteLine("test");
-
             ConvenienceCommunication conCom = getInfomedCommunication();
             DocumentEntryType docEntry = SelectedDocumentEntryType.DocumentEntryType;
 
@@ -417,7 +417,7 @@ namespace PoCeHealthLive.ViewModel
 
             try
             {
-                storeDocument(docEntry, rrt, "dummy.bin");
+                storeDocument(rrt, SelectedDocumentEntryType.Title + ".pdf");
             }
             catch (URISyntaxException e)
             {
@@ -428,10 +428,16 @@ namespace PoCeHealthLive.ViewModel
                 e.printStackTrace();
             }
         }
-
-        private bool storeDocument(DocumentEntryType docEntry, XDSRetrieveResponseType rrt, String filename)
+        /// <summary>
+        /// Store Document in folder Retrieved Documents
+        /// </summary>
+        /// <param name="docEntry"></param>
+        /// <param name="rrt"></param>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        private bool storeDocument(XDSRetrieveResponseType rrt, String filename)
         {
-
+            string path = "Retrieved Documents/";
             if (rrt.getAttachments() == null)
             {
             }
@@ -441,23 +447,22 @@ namespace PoCeHealthLive.ViewModel
 
                 if (rrt.getErrorList() != null)
                 {
-                    System.Console.WriteLine("\nErrors: " + rrt.getErrorList().getHighestSeverity().getName() + ".");
+                    MessageBoxResult msgBoxError = MessageBox.Show("Error(s): occured: " + 
+                        rrt.getErrorList().getHighestSeverity().getName(), "Error");
                 }
 
-                //System.Console.WriteLine("\nRetrieve sucessful. Retrieved: " + rrt.getAttachments().size() + " documents.");
                 XDSDocument document = (XDSDocument)rrt.getAttachments().get(0);
                 java.io.InputStream docIS = document.getStream();
-                java.io.File targetFile = new java.io.File("Retrieved Documents/" + filename);
+                java.io.File targetFile = new java.io.File(path + filename);
                 FileUtils.copyInputStreamToFile(docIS, targetFile);
 
-                System.Console.WriteLine("\nDocument was stored to: " + targetFile.getCanonicalPath() + "\n");
+                MessageBoxResult msgBoxSuccess = MessageBox.Show("Document was stored to: " + 
+                    Environment.NewLine + targetFile.getCanonicalPath(), "Document stored successful");
             }
-
             else
             {
                 return false;
             }
-
             return true;
         }
 

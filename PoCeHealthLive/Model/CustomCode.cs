@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace PoCeHealthLive.Model
 {
     //rename
-    class DocumentAttributes
+    class CustomCode
     {
         public string Name { get; set; }
         public string Code { get; set; }
-        public DocumentAttributes(string name, string code)
+        public CustomCode(string name, string code)
         {
             this.Name = name;
             this.Code = code;

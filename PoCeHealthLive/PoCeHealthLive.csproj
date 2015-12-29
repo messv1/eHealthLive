@@ -139,7 +139,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\DemographicData.cs" />
-    <Compile Include="Model\DocumentAttributes.cs" />
+    <Compile Include="Model\CustomCode.cs" />
     <Compile Include="Model\DocumentEntryAttributes.cs" />
     <Compile Include="ViewModel\Commands\BrowseDocumentsCommand.cs" />
     <Compile Include="ViewModel\Commands\ClearDemographicDataCommand.cs" />
